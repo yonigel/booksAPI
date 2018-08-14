@@ -9,10 +9,12 @@ import { HttpService } from '../httpService/http.service';
 })
 export class BookService implements BaseService, BookServiceInterface{
 
+  private booksURL: string = '../../data/bookData.json';
+  
+  constructor(private httpService: HttpService) { }
+
   getBooks(): Book[] {
     var books: Book[] = [];
-    
     return books;
   }
-  constructor(private httpService: HttpService) { }
 }

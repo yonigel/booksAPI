@@ -7,6 +7,7 @@ import { FooterComponent } from './components/layout/footer/footer.component';
 import { MainBookListComponent } from './components/booksList/main-book-list/main-book-list.component';
 import { BooksComponent } from './components/booksList/books/books.component';
 import { HttpClientModule } from '@angular/common/http';
+import { EditBookComponent } from './components/booksList/edit-book/edit-book.component';
 
 const appRoutes: Routes = [
   { path: 'books', component: MainBookListComponent },
@@ -23,7 +24,8 @@ const appRoutes: Routes = [
     HeaderComponent,
     FooterComponent,
     MainBookListComponent,
-    BooksComponent
+    BooksComponent,
+    EditBookComponent
   ],
   imports: [
     BrowserModule,

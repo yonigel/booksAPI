@@ -13,11 +13,14 @@ export class BooksComponent implements OnInit {
   bookList: Book[];
 
   private logger: Logger;
-
+  private selectedBook: Book
   constructor() { }
 
   ngOnInit() {
     this.logger = new Logger("BooksComponent");
   }
 
+  private setSelectedBook(book: Book) {
+    this.selectedBook = book;
+  }
 }

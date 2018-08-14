@@ -8,11 +8,24 @@
         </button>
       </div>
       <div class="modal-body">
-        {{selectedBook.bookTitle}}
+        <form>
+          <div class="form-group">
+            <label>Book title</label>
+            <input type="text" class="form-control" name="edittedBookTitle" id="bookTitleInput" value="{{selectedBook.bookTitle}}" [(ngModel)]="edittedBookTitle">
+          </div>
+          <div class="form-group">
+            <label>Authors</label>
+            <input type="text" class="form-control" id="authorsInput" value="{{selectedBook.authorsNames}}">
+          </div>
+          <div class="form-group">
+            <label>Published date</label>
+            <input type="text" class="form-control" id="publishedDateInput" value="{{selectedBook.publishedDate}}">
+          </div>
+        </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-primary" (click)="saveBookChanges()">Save changes</button>
       </div>
     </div>
   </div>

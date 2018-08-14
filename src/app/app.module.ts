@@ -8,6 +8,8 @@ import { MainBookListComponent } from './components/booksList/main-book-list/mai
 import { BooksComponent } from './components/booksList/books/books.component';
 import { HttpClientModule } from '@angular/common/http';
 import { EditBookComponent } from './components/booksList/edit-book/edit-book.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DeleteBookComponent } from './components/booksList/delete-book/delete-book.component';
 
 const appRoutes: Routes = [
   { path: 'books', component: MainBookListComponent },
@@ -25,11 +27,14 @@ const appRoutes: Routes = [
     FooterComponent,
     MainBookListComponent,
     BooksComponent,
-    EditBookComponent
+    EditBookComponent,
+    DeleteBookComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: false }

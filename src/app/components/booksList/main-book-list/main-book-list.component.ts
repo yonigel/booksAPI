@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { BookService } from '../../../services/bookService/book.service';
+import { Logger } from '../../../logger/logger';
 
 @Component({
   selector: 'app-main-book-list',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainBookListComponent implements OnInit {
 
-  constructor() { }
+  private logger: Logger;
+
+  constructor(private bookService: BookService) {
+    this.logger = new Logger(`MainBookListComponent`);
+   }
 
   ngOnInit() {
+    this.logger.log(`initializing`);
+    console.log("lalala")
+    this.bookService.getBooks();
   }
 
 }

@@ -11,7 +11,7 @@ import { Book } from '../../../models/book';
 export class MainBookListComponent implements OnInit {
 
   private logger: Logger;
-  private bookList: Book[];
+  bookList: Book[];
 
   constructor(private bookService: BookService) {
     this.logger = new Logger(`MainBookListComponent`);
@@ -23,6 +23,7 @@ export class MainBookListComponent implements OnInit {
     this.bookService.getBooks().subscribe(data => {
       for (let book of data.items) {
         let parsedBook: Book = this.bookService.parseBook(book)     
+        this.bookList.push(parsedBook);
       }
     },
     error => {

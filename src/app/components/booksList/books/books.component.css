@@ -1,0 +1,12 @@
+.bookCard {
+    padding: 0;
+}
+
+.bookRow {
+    width: 90%;
+    margin: 2% auto;
+}
+
+.buttonBookCard {
+    margin: 0 1%;    
+}

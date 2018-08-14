@@ -25,8 +25,15 @@ export class BookService implements BaseService, BookServiceInterface{
 
   parseBook(bookData): Book {
     var parsedBook: Book;
+    var authorsNames: string[] = []
     this.logger.log(`parsing book`);
-    this.logger.log(JSON.stringify(bookData.volumeInfo.title))
+    if(bookData.volumeInfo.authors != undefined) {
+      authorsNames = Array.from(bookData.volumeInfo.authors)
+    } 
+    else {
+      authorsNames.push('none');
+    }
+    parsedBook = new Book(authorsNames, bookData.volumeInfo.publishedDate, bookData.volumeInfo.title);
     return parsedBook;
   }
 }

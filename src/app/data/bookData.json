@@ -1,0 +1,71 @@
+{
+  "kind": "books#volume",
+  "id": "s1gVAAAAYAAJ",
+  "etag": "cM6ZPVLTGB8",
+  "selfLink": "https://www.googleapis.com/books/v1/volumes/s1gVAAAAYAAJ",
+  "volumeInfo": {
+    "title": "Pride and Prejudice",
+    "authors": [
+      "Jane Austen"
+    ],
+    "publisher": "C. Scribner's sons",
+    "publishedDate": "1918",
+    "description": "Austen’s most celebrated novel tells the story of Elizabeth Bennet, a bright, lively young woman with four sisters, and a mother determined to marry them to wealthy men. At a party near the Bennets’ home in the English countryside, Elizabeth meets the wealthy, proud Fitzwilliam Darcy. Elizabeth initially finds Darcy haughty and intolerable, but circumstances continue to unite the pair. Mr. Darcy finds himself captivated by Elizabeth’s wit and candor, while her reservations about his character slowly vanish. The story is as much a social critique as it is a love story, and the prose crackles with Austen’s wry wit.",
+    "readingModes": {
+      "text": true,
+      "image": false
+    },
+    "pageCount": 401,
+    "printedPageCount": 448,
+    "dimensions": {
+      "height": "18.00 cm"
+    },
+    "printType": "BOOK",
+    "averageRating": 4.0,
+    "ratingsCount": 2257,
+    "maturityRating": "NOT_MATURE",
+    "allowAnonLogging": false,
+    "contentVersion": "1.1.6.0.preview.2",
+    "panelizationSummary": {
+      "containsEpubBubbles": false,
+      "containsImageBubbles": false
+    },
+    "imageLinks": {
+      "smallThumbnail": "http://books.google.com/books/content?id=s1gVAAAAYAAJ&printsec=frontcover&img=1&zoom=5&imgtk=AFLRE73rqW_VeibhLYvLvMIAtqFKZmcVy9A2Z3wH6uBVPuHxkNQDTwmRH8LZySNvuhS__AJkCL9YFor2z3K0KKCxIYfCubvAsBOhuZ99tXuR8P5urULQeaZu3fEjhynzIzKkjlQ4Fm2Y&source=gbs_api",
+      "thumbnail": "http://books.google.com/books/content?id=s1gVAAAAYAAJ&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE733LpbKnkHGWhLMs0i_ohCskRjP-5STLIif0HEQzJ240_oP1PDGsrsYZit77w43-Z9HC5b6RQ39G6DkdfqJDZRij8PWyxboVagXz0NHGhQ2QcINHhkZwNlAyZGg1c8NFjpEJ_Bp&source=gbs_api"
+    },
+    "language": "en",
+    "previewLink": "http://books.google.com/books?id=s1gVAAAAYAAJ&hl=&source=gbs_api",
+    "infoLink": "https://play.google.com/store/books/details?id=s1gVAAAAYAAJ&source=gbs_api",
+    "canonicalVolumeLink": "https://market.android.com/details?id=book-s1gVAAAAYAAJ"
+  },
+  "layerInfo": {
+    "layers": [
+      {
+        "layerId": "geo",
+        "volumeAnnotationsVersion": "10"
+      }
+    ]
+  },
+  "saleInfo": {
+    "country": "IL",
+    "saleability": "NOT_FOR_SALE",
+    "isEbook": false
+  },
+  "accessInfo": {
+    "country": "IL",
+    "viewability": "NO_PAGES",
+    "embeddable": false,
+    "publicDomain": false,
+    "textToSpeechPermission": "ALLOWED",
+    "epub": {
+      "isAvailable": true
+    },
+    "pdf": {
+      "isAvailable": true
+    },
+    "webReaderLink": "http://play.google.com/books/reader?id=s1gVAAAAYAAJ&hl=&printsec=frontcover&source=gbs_api",
+    "accessViewStatus": "NONE",
+    "quoteSharingAllowed": false
+  }
+}

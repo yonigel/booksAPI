@@ -1,12 +1,12 @@
 export class Book {
 
     id: string;
-    authorName: string;
+    authorsNames: string[];
     publishedDate: string;
     bookTitle: string;
 
-    constructor(authorName: string, publishedDate: string, bookTitle: string) {
-        this.authorName = authorName;
+    constructor(authorsNames: string[], publishedDate: string, bookTitle: string) {
+        this.authorsNames = authorsNames;
         this.publishedDate = publishedDate;
         this.bookTitle = bookTitle;
    } 

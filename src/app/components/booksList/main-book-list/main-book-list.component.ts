@@ -11,6 +11,7 @@ import { Book } from '../../../models/book';
 export class MainBookListComponent implements OnInit {
 
   private logger: Logger;
+  private bookList: Book[];
 
   constructor(private bookService: BookService) {
     this.logger = new Logger(`MainBookListComponent`);
@@ -18,8 +19,8 @@ export class MainBookListComponent implements OnInit {
 
   ngOnInit() {
     this.logger.log(`initializing`);
+    this.bookList = [];
     this.bookService.getBooks().subscribe(data => {
-    
       for (let book of data.items) {
         let parsedBook: Book = this.bookService.parseBook(book)     
       }

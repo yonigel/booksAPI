@@ -13,9 +13,11 @@ export class BookService implements BaseService, BookServiceInterface{
 
   private readonly BOOKS_DATA_URL: string = '../assets/booksData.json';
   private logger: Logger;
+  private bookId: number;
   
   constructor(private httpService: HttpService) {
     this.logger = new Logger(`BookService`);
+    this.bookId = 0;
    }
 
   getBooks(): Observable<any> {
@@ -26,14 +28,13 @@ export class BookService implements BaseService, BookServiceInterface{
   parseBook(bookData): Book {
     var parsedBook: Book;
     var authorsNames: string[] = []
-    this.logger.log(`parsing book`);
     if(bookData.volumeInfo.authors != undefined) {
       authorsNames = Array.from(bookData.volumeInfo.authors)
     } 
     else {
       authorsNames.push('none');
     }
-    parsedBook = new Book(authorsNames, bookData.volumeInfo.publishedDate, bookData.volumeInfo.title);
+    parsedBook = new Book(this.bookId, authorsNames, bookData.volumeInfo.publishedDate, bookData.volumeInfo.title);
     return parsedBook;
   }
 }

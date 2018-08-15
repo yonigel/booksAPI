@@ -7,7 +7,7 @@ export interface BookServiceInterface {
 
     deleteBook(book: Book, bookList: Book[]): Book[]
 
-    addBook()
+    addBook(bookTitle: string, bookAuthor: string[], bookDate: Date, bookList: Book[]):Book[]
 
     parseBook(book): Book
 

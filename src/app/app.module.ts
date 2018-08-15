@@ -12,6 +12,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DeleteBookComponent } from './components/booksList/delete-book/delete-book.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { BookTitlePipePipe } from './pipes/book-title-pipe.pipe';
+import { AddBookComponent } from './components/booksList/add-book/add-book.component';
 
 const appRoutes: Routes = [
   { path: 'books', component: MainBookListComponent },
@@ -31,7 +32,8 @@ const appRoutes: Routes = [
     BooksComponent,
     EditBookComponent,
     DeleteBookComponent,
-    BookTitlePipePipe
+    BookTitlePipePipe,
+    AddBookComponent
   ],
   imports: [
     BrowserModule,

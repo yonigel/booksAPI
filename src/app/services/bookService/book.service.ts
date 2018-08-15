@@ -91,8 +91,11 @@ export class BookService implements BaseService, BookServiceInterface{
     return bookList
   }
 
-  addBook() {
-
+  addBook(bookTitle: string, bookAuthor: string[], bookDate: Date, bookList: Book[]):Book[] {
+    var newBookList: Book[] = []
+    var newBook: Book = new Book(this.bookId, bookAuthor, bookDate, bookTitle)
+    bookList.push(newBook)
+    return bookList;
   }
 
   private parseDate(date: string, seperator: string): Date {

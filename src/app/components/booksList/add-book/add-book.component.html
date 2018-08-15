@@ -1,0 +1,35 @@
+<div class="modal fade" id="addBook" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Add new book</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label>Book title</label>
+              <input type="text" class="form-control" name="edittedBookTitle" id="bookTitleInput" placeholder="Title" (keyup)="bookTitleChanged($event.target.value)">
+              <span [hidden]="!bookTitleInvalid" class="badge badge-danger">Book's title can't be empty</span>
+            </div>
+            <div class="form-group">
+              <label>Authors</label>
+              <input type="text" class="form-control" id="authorsInput"  name="edittedBooksAuthor" placeholder="Author(s)" (keyup)="bookAuthorChanged($event.target.value)">
+              <span [hidden]="!bookAuthorInvalid" class="badge badge-danger">Book's author can't be empty</span>
+            </div>
+            <div class="form-group">
+              <label>Published date</label>
+              <input type="text" class="form-control" id="publishedDateInput" placeholder="dd/mm/yyyy" (keyup)="bookDateChanged($event.target.value)">
+              <span [hidden]="isDateValid == true" class="badge badge-danger">Date is invalid. Please enter date in format dd/mm/yyyy</span>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" (click)="addNewBook()" [attr.disabled]="(newBookAuthor == '' || newBookTitle == '' || newbookDate == '') ? '' : null">Add book</button>
+        </div>
+      </div>
+    </div>
+  </div>

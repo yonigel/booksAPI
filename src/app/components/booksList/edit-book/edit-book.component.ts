@@ -17,6 +17,8 @@ export class EditBookComponent implements OnInit {
   private edittedBooksAuthor: string;
   private edittedBooksDate: Date;
   private isDateValid: boolean;
+  private showBookTitleError: boolean
+  private showBookAuthorError: boolean
   private logger: Logger;
 
   constructor(private bookService: BookService) { }
@@ -25,6 +27,8 @@ export class EditBookComponent implements OnInit {
     this.selectedBook = new Book();
     this.logger = new Logger("EditBookComponent");
     this.isDateValid = true;
+    this.showBookTitleError = false;
+    this.showBookAuthorError = false;
   }
 
   private saveBookChanges() {
@@ -43,11 +47,23 @@ export class EditBookComponent implements OnInit {
 
   private bookTitleChanged(newBookTitle) {
     this.logger.log('bookTitleChanged')
+    if(newBookTitle == '') {
+      this.showBookTitleError = true;
+    }
+    else {
+      this.showBookTitleError = false;
+    }
     this.edittedBookTitle = newBookTitle;
   }
 
   private bookAuthorChanged(newBookAuthor) {
     this.logger.log('bookAuthorChanged')
+    if(newBookAuthor == '') {
+      this.showBookAuthorError = true;
+    }
+    else {
+      this.showBookAuthorError = false;
+    }
     this.edittedBooksAuthor = newBookAuthor
     
   }

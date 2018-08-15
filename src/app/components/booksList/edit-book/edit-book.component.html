@@ -11,11 +11,13 @@
         <form>
           <div class="form-group">
             <label>Book title</label>
-            <input type="text" class="form-control" name="edittedBookTitle" id="bookTitleInput" value="{{selectedBook.bookTitle}}" (change)="bookTitleChanged($event.target.value)">
+            <input type="text" class="form-control" name="edittedBookTitle" id="bookTitleInput" value="{{selectedBook.bookTitle}}" (keyup)="bookTitleChanged($event.target.value)">
+            <span [hidden]="!showBookTitleError" class="badge badge-danger">Book's title can't be empty</span>
           </div>
           <div class="form-group">
             <label>Authors</label>
-            <input type="text" class="form-control" id="authorsInput"  name="edittedBooksAuthor" value="{{selectedBook.authorsNames}}" (change)="bookAuthorChanged($event.target.value)">
+            <input type="text" class="form-control" id="authorsInput"  name="edittedBooksAuthor" value="{{selectedBook.authorsNames}}" (keyup)="bookAuthorChanged($event.target.value)">
+            <span [hidden]="!showBookAuthorError" class="badge badge-danger">Book's author can't be empty</span>
           </div>
           <div class="form-group">
             <label>Published date</label>

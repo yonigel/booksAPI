@@ -1,18 +1,25 @@
 <div class="row bookRow" >
-  <div *ngFor="let book of bookList" class="card col-md-3 bookCard">
+  <div *ngFor="let book of bookList" class="card col-md-4 bookCard">
+    <div class="card-header bg-Light ">
+      <a href="#" class="badge badge-dark bookHeader" (click)="setSelectedBook(book)" data-toggle="modal" data-target="#editBook">Edit</a>
+
+      <a href="#" class="badge badge-dark bookHeader" (click)="setSelectedBook(book)" data-toggle="modal" data-target="#deleteBook">Delete</a>
+      
+    </div>
     <div class="card-body">
       
       <h5 class="card-title">{{book.bookTitle | bookTitlePipe}}</h5>
+      
       <h6 class="card-subtitle mb-2 text-muted"><b>id:</b> {{book.id}}</h6>
       <h6 class="card-subtitle mb-2 text-muted"><b>Author(s):</b> {{book.authorsNames}}</h6>
       <h6 class="card-subtitle mb-2 text-muted"><b>Publish date:</b>
         <!-- {{book.getDateString()}} -->
         {{book.publishedDate | date:"MM/dd/yyyy"}}
         </h6>
-      <button type="button" (click)="setSelectedBook(book)" class="btn btn-info buttonBookCard" data-toggle="modal" data-target="#editBook">
+      <!-- <button type="button" (click)="setSelectedBook(book)" class="btn btn-info buttonBookCard" data-toggle="modal" data-target="#editBook">
         Edit book
       </button>
-      <button type="button" (click)="setSelectedBook(book)" class="btn btn-danger buttonBookCard" data-toggle="modal" data-target="#deleteBook">Remove book</button>
+      <button type="button" (click)="setSelectedBook(book)" class="btn btn-danger buttonBookCard" data-toggle="modal" data-target="#deleteBook">Remove book</button> -->
 
     </div>
   </div>

@@ -28,7 +28,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" (click)="addNewBook()" [attr.disabled]="(newBookAuthor == '' || newBookTitle == '' || newbookDate == '') ? '' : null">Add book</button>
+          <button type="button" class="btn btn-primary" (click)="addNewBook()" [attr.disabled]="(edittedBooksAuthor == '' || edittedBookTitle == '' || isDateValid == false) ? '' : null">Add book</button>
         </div>
       </div>
     </div>

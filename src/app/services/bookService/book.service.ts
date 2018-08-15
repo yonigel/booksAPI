@@ -79,6 +79,22 @@ export class BookService implements BaseService, BookServiceInterface{
     return result;
   }
 
+  deleteBook(selectedBook: Book, bookList: Book[]): Book[] {
+    var newBookList: Book[] = []
+    bookList.forEach(function(book, index) {
+      if(book.id == selectedBook.id) {
+        this.logger.log(`deleting book ${book.bookTitle}`)
+        bookList.splice(index, 1)
+      }
+    }, this)
+
+    return bookList
+  }
+
+  addBook() {
+
+  }
+
   private parseDate(date: string, seperator: string): Date {
     var parsedDate = new Date();
     var dateModules = date.split(seperator);

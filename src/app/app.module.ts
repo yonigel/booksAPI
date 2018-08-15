@@ -11,6 +11,7 @@ import { EditBookComponent } from './components/booksList/edit-book/edit-book.co
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DeleteBookComponent } from './components/booksList/delete-book/delete-book.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { BookTitlePipePipe } from './pipes/book-title-pipe.pipe';
 
 const appRoutes: Routes = [
   { path: 'books', component: MainBookListComponent },
@@ -29,7 +30,8 @@ const appRoutes: Routes = [
     MainBookListComponent,
     BooksComponent,
     EditBookComponent,
-    DeleteBookComponent
+    DeleteBookComponent,
+    BookTitlePipePipe
   ],
   imports: [
     BrowserModule,

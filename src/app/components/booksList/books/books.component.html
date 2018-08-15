@@ -1,10 +1,11 @@
 <div class="row bookRow" >
   <div *ngFor="let book of bookList" class="card col-md-3 bookCard">
     <div class="card-body">
-      <h5 class="card-title">{{book.bookTitle}}</h5>
+      <h5 class="card-title">{{book.bookTitle | bookTitlePipe}}</h5>
       <h6 class="card-subtitle mb-2 text-muted"><b>Author(s):</b> {{book.authorsNames}}</h6>
       <h6 class="card-subtitle mb-2 text-muted"><b>Publish date:</b>
-        {{book.getDateString()}}
+        <!-- {{book.getDateString()}} -->
+        {{book.publishedDate | date:"MM/dd/yyyy"}}
         </h6>
       <button type="button" (click)="setSelectedBook(book)" class="btn btn-info buttonBookCard" data-toggle="modal" data-target="#editBook">
         Edit book

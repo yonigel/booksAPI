@@ -29,6 +29,7 @@ export class BookService implements BaseService, BookServiceInterface{
   parseBook(bookData): Book {
     var parsedBook: Book;
     var authorsNames: string[] = []
+    var parsedBookTitle: string;
     var parsedDate: Date = this.parseDate(bookData.volumeInfo.publishedDate, this.GOOGLE_API_DATE_SEPERATOR);
     if(bookData.volumeInfo.authors != undefined) {
       authorsNames = Array.from(bookData.volumeInfo.authors)
@@ -36,8 +37,30 @@ export class BookService implements BaseService, BookServiceInterface{
     else {
       authorsNames.push('none');
     }
+    // parsedBookTitle = this.parseBookTitle(bookData.volumeInfo.title)
     parsedBook = new Book(this.bookId, authorsNames, parsedDate, bookData.volumeInfo.title);
+    // this.logger.log(this.parseBookTitle(parsedBook.bookTitle))
     return parsedBook;
+  }
+
+  parseBookTitle(bookTitle: string): string {
+    var parsedBookTitle: string = '';
+    var bookTitleParts = bookTitle.split(" ");
+    for(let bookTitlePart of bookTitleParts) {
+      let newTitle: string = ''
+      for(let bookTitleChar of bookTitlePart) {
+        if(!bookTitleChar.match(/^[a-zA-Z]+$/)) {
+          this.logger.log(`${bookTitleChar} not match`)
+          bookTitleChar = '';
+        } 
+        newTitle += bookTitleChar;
+        this.logger.log(`newTitle is now ${newTitle}`)
+      }
+      bookTitlePart = newTitle;
+      bookTitlePart = bookTitlePart.charAt(0).toUpperCase() + bookTitlePart.slice(1).toLowerCase();
+      parsedBookTitle += ` ${bookTitlePart}`;
+    }
+    return parsedBookTitle;
   }
 
   isDateValid(date: string): boolean {

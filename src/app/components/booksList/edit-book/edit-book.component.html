@@ -26,7 +26,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" (click)="saveBookChanges()" [attr.disabled]="(edittedBooksAuthor == '' || edittedBookTitle == '') ? '' : null">Save changes</button>
+        <button type="button" class="btn btn-primary" (click)="saveBookChanges()" [attr.disabled]="(edittedBooksAuthor == '' || edittedBookTitle == '' || isDateValid == false) ? '' : null">Save changes</button>
       </div>
     </div>
   </div>

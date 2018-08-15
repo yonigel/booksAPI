@@ -37,9 +37,8 @@ export class BookService implements BaseService, BookServiceInterface{
     else {
       authorsNames.push('none');
     }
-    // parsedBookTitle = this.parseBookTitle(bookData.volumeInfo.title)
     parsedBook = new Book(this.bookId, authorsNames, parsedDate, bookData.volumeInfo.title);
-    // this.logger.log(this.parseBookTitle(parsedBook.bookTitle))
+    this.bookId++;
     return parsedBook;
   }
 
@@ -63,7 +62,7 @@ export class BookService implements BaseService, BookServiceInterface{
     return parsedBookTitle;
   }
 
-  isDateValid(date: string): boolean {
+  isDateValid(date: Date): boolean {
     var result: boolean;
     var splitedDate: string[] = date.toString().split("/");
     this.logger.log(`splitedDate is ${splitedDate}`)

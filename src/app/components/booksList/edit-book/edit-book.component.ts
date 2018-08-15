@@ -15,7 +15,7 @@ export class EditBookComponent implements OnInit {
 
   private edittedBookTitle: string;
   private edittedBooksAuthor: string;
-  private edittedBooksDate: string;
+  private edittedBooksDate: Date;
   private isDateValid: boolean;
   private logger: Logger;
 
@@ -33,10 +33,10 @@ export class EditBookComponent implements OnInit {
 
     if(this.edittedBooksDate != undefined) {
       this.isDateValid = this.bookService.isDateValid(this.edittedBooksDate)
-      this.logger.log(`date valid is ${this.isDateValid}`)
+      this.selectedBook.publishedDate = this.edittedBooksDate;
     }
 
-
+    
   
     
   }
@@ -52,7 +52,7 @@ export class EditBookComponent implements OnInit {
     
   }
 
-  private bookDateChanged(newBookDate: string) {
+  private bookDateChanged(newBookDate: Date) {
     this.logger.log(`changed`)
     this.edittedBooksDate = newBookDate;
     this.isDateValid = this.bookService.isDateValid(this.edittedBooksDate);

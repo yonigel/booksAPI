@@ -6,4 +6,7 @@ export interface BookServiceInterface {
     getBooks(): Observable<any>
 
     parseBook(book): Book
+
+    isDateValid(date): boolean
+
 }

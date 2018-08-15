@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { EditBookComponent } from './components/booksList/edit-book/edit-book.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DeleteBookComponent } from './components/booksList/delete-book/delete-book.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 const appRoutes: Routes = [
   { path: 'books', component: MainBookListComponent },
@@ -35,6 +36,7 @@ const appRoutes: Routes = [
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    NgbModule,
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: false }

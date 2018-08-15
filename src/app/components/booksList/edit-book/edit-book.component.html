@@ -11,21 +11,22 @@
         <form>
           <div class="form-group">
             <label>Book title</label>
-            <input type="text" class="form-control" name="edittedBookTitle" id="bookTitleInput" value="{{selectedBook.bookTitle}}" [(ngModel)]="edittedBookTitle">
+            <input type="text" class="form-control" name="edittedBookTitle" id="bookTitleInput" value="{{selectedBook.bookTitle}}" (change)="bookTitleChanged($event.target.value)">
           </div>
           <div class="form-group">
             <label>Authors</label>
-            <input type="text" class="form-control" id="authorsInput" value="{{selectedBook.authorsNames}}">
+            <input type="text" class="form-control" id="authorsInput"  name="edittedBooksAuthor" value="{{selectedBook.authorsNames}}" (change)="bookAuthorChanged($event.target.value)">
           </div>
           <div class="form-group">
             <label>Published date</label>
-            <input type="text" class="form-control" id="publishedDateInput" value="{{selectedBook.publishedDate}}">
+            <input type="text" class="form-control" id="publishedDateInput" value="{{selectedBook.getDateString()}}" (keyup)="bookDateChanged($event.target.value)">
+            <span [hidden]="isDateValid == true" class="badge badge-danger">Date is invalid. Please enter date in format dd/mm/yyyy</span>
           </div>
         </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" (click)="saveBookChanges()">Save changes</button>
+        <button type="button" class="btn btn-primary" (click)="saveBookChanges()" [attr.disabled]="(edittedBooksAuthor == '' || edittedBookTitle == '') ? '' : null">Save changes</button>
       </div>
     </div>
   </div>

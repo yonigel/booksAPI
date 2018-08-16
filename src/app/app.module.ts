@@ -46,7 +46,7 @@ const appRoutes: Routes = [
       { enableTracing: false }
     )
   ],
-  providers: [],
+  providers: [BookTitlePipePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

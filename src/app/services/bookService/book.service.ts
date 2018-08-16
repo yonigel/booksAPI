@@ -5,6 +5,7 @@ import { Book } from '../../models/book';
 import { HttpService } from '../httpService/http.service';
 import { Logger } from '../../logger/logger';
 import { Observable } from 'rxjs';
+import { BookTitlePipePipe } from '../../pipes/book-title-pipe.pipe';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class BookService implements BaseService, BookServiceInterface{
   private logger: Logger;
   private bookId: number;
   
-  constructor(private httpService: HttpService) {
+  constructor(private httpService: HttpService, private bookTitlePipe: BookTitlePipePipe) {
     this.logger = new Logger(`BookService`);
     this.bookId = 0;
    }
@@ -76,6 +77,16 @@ export class BookService implements BaseService, BookServiceInterface{
     else {
       result = true;
     }
+    return result;
+  }
+
+  isBookAlreadyExists(newBooksTitle: string, bookList: Book[]): boolean {
+    var result: boolean = false    
+    bookList.forEach(function(book) {
+      if(this.bookTitlePipe.transform(newBooksTitle) == this.bookTitlePipe.transform(book.bookTitle)) {
+        result = true;
+      }
+    }, this)
     return result;
   }
 

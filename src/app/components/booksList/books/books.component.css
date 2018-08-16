@@ -13,5 +13,15 @@
 }
 
 a.bookHeader {
-    margin: 0 1%;
+    margin-right: 0;
+    margin-left: 1%;
+    text-align: right;
+}
+
+div.bookHeader {
+    /* min-height: 3.5em; */
+}
+
+div.bookBody {
+    min-height: 10em;
 }

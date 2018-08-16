@@ -21,14 +21,14 @@
           </div>
           <div class="form-group">
             <label>Published date</label>
-            <input type="text" class="form-control" id="publishedDateInput" value="{{selectedBook.publishedDate | date:'MM/dd/yyyy'}}" (keyup)="bookDateChanged($event.target.value)">
+            <input type="text" class="form-control" id="publishedDateInput" value="{{selectedBook.publishedDate | date:'dd/MM/yyyy'}}" (keyup)="bookDateChanged($event.target.value)">
             <span [hidden]="isDateValid == true" class="badge badge-danger">Date is invalid. Please enter date in format dd/mm/yyyy</span>
           </div>
         </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" (click)="saveBookChanges()" [attr.disabled]="(edittedBooksAuthor == '' || edittedBookTitle == '' || isDateValid == false) ? '' : null">Save changes</button>
+        <button type="button" class="btn btn-primary" (click)="saveBookChanges()" [attr.disabled]="(edittedBooksAuthor == '' || edittedBookTitle == '' || isDateValid == false) ? '' : null" data-dismiss="modal">Save changes</button>
       </div>
     </div>
   </div>

@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Book } from '../../../models/book';
 import { BookService } from '../../../services/bookService/book.service';
 import { Logger } from '../../../logger/logger';
+import { BookEventsService } from '../../../events/bookEvents/book-events.service';
 
 @Component({
   selector: 'app-add-book',
@@ -21,12 +22,15 @@ export class AddBookComponent implements OnInit {
   private newBookAuthor: string[]
   private newbookDate: Date
   private isNewBookExists: boolean
-  
 
-  constructor(private bookService: BookService) { }
+  constructor(private bookService: BookService, private bookEventsService: BookEventsService) { }
 
   ngOnInit() {
     this.logger = new Logger("AddBookComponent")
+    this.initLayout()
+  }
+
+  private initLayout() {
     this.isDateValid = true;
     this.bookAuthorInvalid = false
     this.bookTitleInvalid = false
@@ -37,6 +41,7 @@ export class AddBookComponent implements OnInit {
 
   private addNewBook() {
     this.bookList = this.bookService.addBook(this.newBookTitle, this.newBookAuthor, this.newbookDate, this.bookList)
+    this.bookEventsService.alertNewBookAdded(this.newBookTitle);
   }
 
   private bookDateChanged(date: Date) {

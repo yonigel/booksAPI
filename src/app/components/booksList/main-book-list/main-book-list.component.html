@@ -1,3 +1,12 @@
 <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addBook">Add new book</button> -->
+<div class="row mainBookRow">
+    <div [hidden]="!newBookAdded" style="display: inline; margin-top: 1%;" class="alert alert-success" role="alert">
+        <i class="fa fa-check-circle-o"></i>
+        The book <b>{{newBookTitle}}</b> was successfully added!
+        <a href="#" style="color: #f46542" (click)="newBookAdded = false"><i class="fa fa-times-circle-o"></i></a>
+    </div>
+</div>
+
+
 <app-books [bookList]="bookList"></app-books>
 <app-add-book [bookList]="bookList"></app-add-book>

@@ -159,7 +159,7 @@ var AppModule = /** @class */ (function () {
                 _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_12__["NgbModule"],
                 _angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterModule"].forRoot(appRoutes, { enableTracing: false })
             ],
-            providers: [],
+            providers: [_pipes_book_title_pipe_pipe__WEBPACK_IMPORTED_MODULE_13__["BookTitlePipePipe"]],
             bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_3__["AppComponent"]]
         })
     ], AppModule);
@@ -188,7 +188,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"modal fade\" id=\"addBook\" tabindex=\"-1\" role=\"dialog\" aria-hidden=\"true\">\n    <div class=\"modal-dialog\" role=\"document\">\n      <div class=\"modal-content\">\n        <div class=\"modal-header\">\n          <h5 class=\"modal-title\">Add new book</h5>\n          <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n            <span aria-hidden=\"true\">&times;</span>\n          </button>\n        </div>\n        <div class=\"modal-body\">\n          <form>\n            <div class=\"form-group\">\n              <label>Book title</label>\n              <input type=\"text\" class=\"form-control\" name=\"edittedBookTitle\" id=\"bookTitleInput\" placeholder=\"Title\" (keyup)=\"bookTitleChanged($event.target.value)\">\n              <span [hidden]=\"!bookTitleInvalid\" class=\"badge badge-danger\">Book's title can't be empty</span>\n            </div>\n            <div class=\"form-group\">\n              <label>Authors</label>\n              <input type=\"text\" class=\"form-control\" id=\"authorsInput\"  name=\"edittedBooksAuthor\" placeholder=\"Author(s)\" (keyup)=\"bookAuthorChanged($event.target.value)\">\n              <span [hidden]=\"!bookAuthorInvalid\" class=\"badge badge-danger\">Book's author can't be empty</span>\n            </div>\n            <div class=\"form-group\">\n              <label>Published date</label>\n              <input type=\"text\" class=\"form-control\" id=\"publishedDateInput\" placeholder=\"dd/mm/yyyy\" (keyup)=\"bookDateChanged($event.target.value)\">\n              <span [hidden]=\"isDateValid == true\" class=\"badge badge-danger\">Date is invalid. Please enter date in format dd/mm/yyyy</span>\n            </div>\n          </form>\n        </div>\n        <div class=\"modal-footer\">\n          <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Close</button>\n          <button type=\"button\" class=\"btn btn-primary\" (click)=\"addNewBook()\" [attr.disabled]=\"(edittedBooksAuthor == '' || edittedBookTitle == '' || isDateValid == false) ? '' : null\">Add book</button>\n        </div>\n      </div>\n    </div>\n  </div>"
+module.exports = "<div class=\"modal fade\" id=\"addBook\" tabindex=\"-1\" role=\"dialog\" aria-hidden=\"true\">\n    <div class=\"modal-dialog\" role=\"document\">\n      <div class=\"modal-content\">\n        <div class=\"modal-header\">\n          <h5 class=\"modal-title\">Add new book</h5>\n          <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n            <span aria-hidden=\"true\">&times;</span>\n          </button>\n        </div>\n        <div class=\"modal-body\">\n          <form>\n            <div class=\"form-group\">\n              <label>Book title</label>\n              <input type=\"text\" class=\"form-control\" name=\"edittedBookTitle\" id=\"bookTitleInput\" placeholder=\"Title\" (keyup)=\"bookTitleChanged($event.target.value)\">\n              <span [hidden]=\"!bookTitleInvalid\" class=\"badge badge-danger\">Book's title can't be empty</span>\n              <span [hidden]=\"!isNewBookExists\" class=\"badge badge-danger\">This book is already exists</span>\n            </div>\n            <div class=\"form-group\">\n              <label>Authors</label>\n              <input type=\"text\" class=\"form-control\" id=\"authorsInput\"  name=\"edittedBooksAuthor\" placeholder=\"Author(s)\" (keyup)=\"bookAuthorChanged($event.target.value)\">\n              <span [hidden]=\"!bookAuthorInvalid\" class=\"badge badge-danger\">Book's author can't be empty</span>\n            </div>\n            <div class=\"form-group\">\n              <label>Published date</label>\n              <input type=\"text\" class=\"form-control\" id=\"publishedDateInput\" placeholder=\"dd/mm/yyyy\" (keyup)=\"bookDateChanged($event.target.value)\">\n              <span [hidden]=\"isDateValid == true\" class=\"badge badge-danger\">Date is invalid. Please enter date in format dd/mm/yyyy</span>\n            </div>\n          </form>\n        </div>\n        <div class=\"modal-footer\">\n          <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Close</button>\n          <button type=\"button\" class=\"btn btn-primary\" (click)=\"addNewBook()\" [attr.disabled]=\"(newBookAuthor == '' || newBookTitle == '' || isDateValid == false || isNewBookExists == true || newbookDate == null) ? '' : null\">Add book</button>\n        </div>\n      </div>\n    </div>\n  </div>"
 
 /***/ }),
 
@@ -204,6 +204,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AddBookComponent", function() { return AddBookComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _services_bookService_book_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../services/bookService/book.service */ "./src/app/services/bookService/book.service.ts");
+/* harmony import */ var _logger_logger__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../logger/logger */ "./src/app/logger/logger.ts");
+/* harmony import */ var _events_bookEvents_book_events_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../events/bookEvents/book-events.service */ "./src/app/events/bookEvents/book-events.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -215,19 +217,25 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 };
 
 
+
+
 var AddBookComponent = /** @class */ (function () {
-    function AddBookComponent(bookService) {
+    function AddBookComponent(bookService, bookEventsService) {
         this.bookService = bookService;
+        this.bookEventsService = bookEventsService;
     }
     AddBookComponent.prototype.ngOnInit = function () {
+        this.logger = new _logger_logger__WEBPACK_IMPORTED_MODULE_2__["Logger"]("AddBookComponent");
         this.isDateValid = true;
         this.bookAuthorInvalid = false;
         this.bookTitleInvalid = false;
+        this.isNewBookExists = false;
         this.newBookAuthor = [];
         this.newBookTitle = '';
     };
     AddBookComponent.prototype.addNewBook = function () {
         this.bookList = this.bookService.addBook(this.newBookTitle, this.newBookAuthor, this.newbookDate, this.bookList);
+        this.bookEventsService.alertNewBookAdded(this.newBookTitle);
     };
     AddBookComponent.prototype.bookDateChanged = function (date) {
         this.newbookDate = date;
@@ -250,6 +258,7 @@ var AddBookComponent = /** @class */ (function () {
         else {
             this.bookTitleInvalid = false;
         }
+        this.isNewBookExists = this.bookService.isBookAlreadyExists(title, this.bookList);
     };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
@@ -261,7 +270,7 @@ var AddBookComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./add-book.component.html */ "./src/app/components/booksList/add-book/add-book.component.html"),
             styles: [__webpack_require__(/*! ./add-book.component.css */ "./src/app/components/booksList/add-book/add-book.component.css")]
         }),
-        __metadata("design:paramtypes", [_services_bookService_book_service__WEBPACK_IMPORTED_MODULE_1__["BookService"]])
+        __metadata("design:paramtypes", [_services_bookService_book_service__WEBPACK_IMPORTED_MODULE_1__["BookService"], _events_bookEvents_book_events_service__WEBPACK_IMPORTED_MODULE_3__["BookEventsService"]])
     ], AddBookComponent);
     return AddBookComponent;
 }());
@@ -277,7 +286,7 @@ var AddBookComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".bookCard {\r\n    padding: 0;\r\n    margin: 1% 0;\r\n}\r\n\r\n.bookRow {\r\n    width: 90%;\r\n    margin: 2% auto;\r\n}\r\n\r\n.buttonBookCard {\r\n    margin: 0 1%;  \r\n}\r\n\r\na.bookHeader {\r\n    margin: 0 1%;\r\n}"
+module.exports = ".bookCard {\r\n    padding: 0;\r\n    margin: 1% 0;\r\n}\r\n\r\n.bookRow {\r\n    width: 90%;\r\n    margin: 2% auto;\r\n}\r\n\r\n.buttonBookCard {\r\n    margin: 0 1%;  \r\n}\r\n\r\na.bookHeader {\r\n    margin-right: 0;\r\n    margin-left: 1%;\r\n    text-align: right;\r\n}\r\n\r\ndiv.bookHeader {\r\n    /* min-height: 3.5em; */\r\n}\r\n\r\ndiv.bookBody {\r\n    min-height: 10em;\r\n}"
 
 /***/ }),
 
@@ -288,7 +297,7 @@ module.exports = ".bookCard {\r\n    padding: 0;\r\n    margin: 1% 0;\r\n}\r\n\r
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row bookRow\" >\n  <div *ngFor=\"let book of bookList\" class=\"card col-md-4 bookCard\">\n    <div class=\"card-header bg-Light \">\n      <a href=\"#\" class=\"badge badge-dark bookHeader\" (click)=\"setSelectedBook(book)\" data-toggle=\"modal\" data-target=\"#editBook\">Edit</a>\n\n      <a href=\"#\" class=\"badge badge-dark bookHeader\" (click)=\"setSelectedBook(book)\" data-toggle=\"modal\" data-target=\"#deleteBook\">Delete</a>\n      \n    </div>\n    <div class=\"card-body\">\n      \n      <h5 class=\"card-title\">{{book.bookTitle | bookTitlePipe}}</h5>\n      \n      <h6 class=\"card-subtitle mb-2 text-muted\"><b>id:</b> {{book.id}}</h6>\n      <h6 class=\"card-subtitle mb-2 text-muted\"><b>Author(s):</b> {{book.authorsNames}}</h6>\n      <h6 class=\"card-subtitle mb-2 text-muted\"><b>Publish date:</b>\n        <!-- {{book.getDateString()}} -->\n        {{book.publishedDate | date:\"MM/dd/yyyy\"}}\n        </h6>\n      <!-- <button type=\"button\" (click)=\"setSelectedBook(book)\" class=\"btn btn-info buttonBookCard\" data-toggle=\"modal\" data-target=\"#editBook\">\n        Edit book\n      </button>\n      <button type=\"button\" (click)=\"setSelectedBook(book)\" class=\"btn btn-danger buttonBookCard\" data-toggle=\"modal\" data-target=\"#deleteBook\">Remove book</button> -->\n\n    </div>\n  </div>\n</div>\n\n\n\n<app-edit-book [selectedBook]=\"selectedBook\"></app-edit-book>\n<app-delete-book [selectedBook]=\"selectedBook\" [bookList]=\"bookList\"></app-delete-book>>"
+module.exports = "<div class=\"row bookRow\" >\n  <div *ngFor=\"let book of bookList\" class=\"card col-md-4 bookCard\">\n    <div class=\"card-header bg-Light \">\n      \n      <div class=\"row bookHeader\">\n          <a href=\"#\" class=\"badge badge-dark bookHeader\" (click)=\"setSelectedBook(book)\" data-toggle=\"modal\" data-target=\"#editBook\"><i class=\"fa fa-edit\"></i> Edit\n          </a>\n\n          <a href=\"#\" class=\"badge badge-dark bookHeader\" (click)=\"setSelectedBook(book)\" data-toggle=\"modal\" data-target=\"#deleteBook\"><i class=\"fa fa-close\"></i> Delete</a>\n          \n        <!-- <div class=\"col-md-8\">\n            {{book.bookTitle | bookTitlePipe}}\n        </div>\n        <div class=\"col-md-4\" style=\"text-align: right\">\n            <a href=\"#\" class=\"badge badge-dark bookHeader\" (click)=\"setSelectedBook(book)\" data-toggle=\"modal\" data-target=\"#editBook\"><i class=\"fa fa-edit\"></i>\n            </a>\n\n            <a href=\"#\" class=\"badge badge-dark bookHeader\" (click)=\"setSelectedBook(book)\" data-toggle=\"modal\" data-target=\"#deleteBook\"><i class=\"fa fa-close\"></i></a>\n            \n        </div> -->\n      </div>\n    </div>\n    <div class=\"card-body\">\n      \n      <h5 class=\"card-title\">{{book.bookTitle | bookTitlePipe}}</h5>\n      <h6 class=\"card-subtitle mb-2 text-muted\"><b>id:</b> {{book.id}}</h6>\n      <h6 class=\"card-subtitle mb-2 text-muted\"><b>Author(s):</b> {{book.authorsNames}}</h6>\n      <h6 class=\"card-subtitle mb-2 text-muted\"><b>Publish date:</b>\n        <!-- {{book.getDateString()}} -->\n        {{book.publishedDate | date:\"dd/MM/yyyy\"}}\n        </h6>\n      <!-- <button type=\"button\" (click)=\"setSelectedBook(book)\" class=\"btn btn-info buttonBookCard\" data-toggle=\"modal\" data-target=\"#editBook\">\n        Edit book\n      </button>\n      <button type=\"button\" (click)=\"setSelectedBook(book)\" class=\"btn btn-danger buttonBookCard\" data-toggle=\"modal\" data-target=\"#deleteBook\">Remove book</button> -->\n\n    </div>\n  </div>\n</div>\n\n\n\n<app-edit-book [selectedBook]=\"selectedBook\"></app-edit-book>\n<app-delete-book [selectedBook]=\"selectedBook\" [bookList]=\"bookList\"></app-delete-book>"
 
 /***/ }),
 
@@ -441,7 +450,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"modal fade\" id=\"editBook\" tabindex=\"-1\" role=\"dialog\" aria-hidden=\"true\">\n  <div class=\"modal-dialog\" role=\"document\">\n    <div class=\"modal-content\">\n      <div class=\"modal-header\">\n        <h5 class=\"modal-title\">Edit book</h5>\n        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n          <span aria-hidden=\"true\">&times;</span>\n        </button>\n      </div>\n      <div class=\"modal-body\">\n        <form>\n          <div class=\"form-group\">\n            <label>Book title</label>\n            <input type=\"text\" class=\"form-control\" name=\"edittedBookTitle\" id=\"bookTitleInput\" value=\"{{selectedBook.bookTitle}}\" (keyup)=\"bookTitleChanged($event.target.value)\">\n            <span [hidden]=\"!showBookTitleError\" class=\"badge badge-danger\">Book's title can't be empty</span>\n          </div>\n          <div class=\"form-group\">\n            <label>Authors</label>\n            <input type=\"text\" class=\"form-control\" id=\"authorsInput\"  name=\"edittedBooksAuthor\" value=\"{{selectedBook.authorsNames}}\" (keyup)=\"bookAuthorChanged($event.target.value)\">\n            <span [hidden]=\"!showBookAuthorError\" class=\"badge badge-danger\">Book's author can't be empty</span>\n          </div>\n          <div class=\"form-group\">\n            <label>Published date</label>\n            <input type=\"text\" class=\"form-control\" id=\"publishedDateInput\" value=\"{{selectedBook.publishedDate | date:'MM/dd/yyyy'}}\" (keyup)=\"bookDateChanged($event.target.value)\">\n            <span [hidden]=\"isDateValid == true\" class=\"badge badge-danger\">Date is invalid. Please enter date in format dd/mm/yyyy</span>\n          </div>\n        </form>\n      </div>\n      <div class=\"modal-footer\">\n        <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Close</button>\n        <button type=\"button\" class=\"btn btn-primary\" (click)=\"saveBookChanges()\" [attr.disabled]=\"(edittedBooksAuthor == '' || edittedBookTitle == '' || isDateValid == false) ? '' : null\" data-dismiss=\"modal\">Save changes</button>\n      </div>\n    </div>\n  </div>\n</div>"
+module.exports = "<div class=\"modal fade\" id=\"editBook\" tabindex=\"-1\" role=\"dialog\" aria-hidden=\"true\">\n  <div class=\"modal-dialog\" role=\"document\">\n    <div class=\"modal-content\">\n      <div class=\"modal-header\">\n        <h5 class=\"modal-title\">Edit book</h5>\n        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n          <span aria-hidden=\"true\">&times;</span>\n        </button>\n      </div>\n      <div class=\"modal-body\">\n        <form>\n          <div class=\"form-group\">\n            <label>Book title</label>\n            <input type=\"text\" class=\"form-control\" name=\"edittedBookTitle\" id=\"bookTitleInput\" value=\"{{selectedBook.bookTitle}}\" (keyup)=\"bookTitleChanged($event.target.value)\">\n            <span [hidden]=\"!showBookTitleError\" class=\"badge badge-danger\">Book's title can't be empty</span>\n          </div>\n          <div class=\"form-group\">\n            <label>Authors</label>\n            <input type=\"text\" class=\"form-control\" id=\"authorsInput\"  name=\"edittedBooksAuthor\" value=\"{{selectedBook.authorsNames}}\" (keyup)=\"bookAuthorChanged($event.target.value)\">\n            <span [hidden]=\"!showBookAuthorError\" class=\"badge badge-danger\">Book's author can't be empty</span>\n          </div>\n          <div class=\"form-group\">\n            <label>Published date</label>\n            <input type=\"text\" class=\"form-control\" id=\"publishedDateInput\" value=\"{{selectedBook.publishedDate | date:'dd/MM/yyyy'}}\" (keyup)=\"bookDateChanged($event.target.value)\">\n            <span [hidden]=\"isDateValid == true\" class=\"badge badge-danger\">Date is invalid. Please enter date in format dd/mm/yyyy</span>\n          </div>\n        </form>\n      </div>\n      <div class=\"modal-footer\">\n        <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Close</button>\n        <button type=\"button\" class=\"btn btn-primary\" (click)=\"saveBookChanges()\" [attr.disabled]=\"(edittedBooksAuthor == '' || edittedBookTitle == '' || isDateValid == false) ? '' : null\" data-dismiss=\"modal\">Save changes</button>\n      </div>\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -571,6 +580,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _services_bookService_book_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../services/bookService/book.service */ "./src/app/services/bookService/book.service.ts");
 /* harmony import */ var _logger_logger__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../logger/logger */ "./src/app/logger/logger.ts");
+/* harmony import */ var _events_bookEvents_book_events_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../events/bookEvents/book-events.service */ "./src/app/events/bookEvents/book-events.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -583,10 +593,16 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var MainBookListComponent = /** @class */ (function () {
-    function MainBookListComponent(bookService) {
+    function MainBookListComponent(bookService, bookEventsService) {
+        var _this = this;
         this.bookService = bookService;
+        this.bookEventsService = bookEventsService;
         this.logger = new _logger_logger__WEBPACK_IMPORTED_MODULE_2__["Logger"]("MainBookListComponent");
+        this.bookEventsService.addNewBookAction$.subscribe(function (data) {
+            _this.logger.log(data);
+        });
     }
     MainBookListComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -608,7 +624,7 @@ var MainBookListComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./main-book-list.component.html */ "./src/app/components/booksList/main-book-list/main-book-list.component.html"),
             styles: [__webpack_require__(/*! ./main-book-list.component.css */ "./src/app/components/booksList/main-book-list/main-book-list.component.css")]
         }),
-        __metadata("design:paramtypes", [_services_bookService_book_service__WEBPACK_IMPORTED_MODULE_1__["BookService"]])
+        __metadata("design:paramtypes", [_services_bookService_book_service__WEBPACK_IMPORTED_MODULE_1__["BookService"], _events_bookEvents_book_events_service__WEBPACK_IMPORTED_MODULE_3__["BookEventsService"]])
     ], MainBookListComponent);
     return MainBookListComponent;
 }());
@@ -698,7 +714,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"navbar navbar-expand-lg navbar-dark bg-dark\">\n    <a class=\"navbar-brand\" href=\"#\">\n        <i class=\"fa fa-home\"></i>\n        BooksAPI\n    </a>\t\n\n    <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarNav\" aria-controls=\"navbarNav\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n      <span class=\"navbar-toggler-icon\"></span>\n    </button>\n    <div class=\"collapse navbar-collapse\" id=\"navbarNav\">\n      <ul class=\"navbar-nav\">\n        <li class=\"nav-item\">\n          <a class=\"nav-link\" href=\"#\" data-toggle=\"modal\" data-target=\"#addBook\">\n            <i class=\"fa fa-plus\"></i>\n            add new book\n          </a>\n        </li>\n      </ul>\n    </div>\n  </nav>"
+module.exports = "<nav class=\"navbar navbar-expand-lg navbar-dark bg-dark\">\n    <a class=\"navbar-brand\" href=\"#\">\n      <i class=\"fa fa-home\"></i>\n      BooksAPI\n    </a>\t\n\n    <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarNav\" aria-controls=\"navbarNav\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n      <span class=\"navbar-toggler-icon\"></span>\n    </button>\n    <div class=\"collapse navbar-collapse\" id=\"navbarNav\">\n      <ul class=\"navbar-nav\">\n        <li class=\"nav-item\">\n          <a class=\"nav-link\" href=\"#\" data-toggle=\"modal\" data-target=\"#addBook\">\n            <i class=\"fa fa-plus\"></i>\n            add new book\n          </a>\n        </li>\n      </ul>\n    </div>\n  </nav>"
 
 /***/ }),
 
@@ -737,6 +753,50 @@ var HeaderComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [])
     ], HeaderComponent);
     return HeaderComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/events/bookEvents/book-events.service.ts":
+/*!**********************************************************!*\
+  !*** ./src/app/events/bookEvents/book-events.service.ts ***!
+  \**********************************************************/
+/*! exports provided: BookEventsService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BookEventsService", function() { return BookEventsService; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var BookEventsService = /** @class */ (function () {
+    function BookEventsService() {
+        this.addNewBookSubject = new rxjs__WEBPACK_IMPORTED_MODULE_1__["Subject"]();
+        this.addNewBookAction$ = this.addNewBookSubject.asObservable();
+    }
+    BookEventsService.prototype.alertNewBookAdded = function (newBooksTitle) {
+        this.addNewBookSubject.next();
+    };
+    BookEventsService = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
+            providedIn: 'root'
+        }),
+        __metadata("design:paramtypes", [])
+    ], BookEventsService);
+    return BookEventsService;
 }());
 
 
@@ -873,6 +933,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _models_book__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../models/book */ "./src/app/models/book.ts");
 /* harmony import */ var _httpService_http_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../httpService/http.service */ "./src/app/services/httpService/http.service.ts");
 /* harmony import */ var _logger_logger__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../logger/logger */ "./src/app/logger/logger.ts");
+/* harmony import */ var _pipes_book_title_pipe_pipe__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../pipes/book-title-pipe.pipe */ "./src/app/pipes/book-title-pipe.pipe.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -886,9 +947,11 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var BookService = /** @class */ (function () {
-    function BookService(httpService) {
+    function BookService(httpService, bookTitlePipe) {
         this.httpService = httpService;
+        this.bookTitlePipe = bookTitlePipe;
         this.BOOKS_DATA_URL = '../assets/booksData.json';
         this.GOOGLE_API_DATE_SEPERATOR = '-';
         this.logger = new _logger_logger__WEBPACK_IMPORTED_MODULE_3__["Logger"]("BookService");
@@ -950,6 +1013,15 @@ var BookService = /** @class */ (function () {
         }
         return result;
     };
+    BookService.prototype.isBookAlreadyExists = function (newBooksTitle, bookList) {
+        var result = false;
+        bookList.forEach(function (book) {
+            if (this.bookTitlePipe.transform(newBooksTitle) == this.bookTitlePipe.transform(book.bookTitle)) {
+                result = true;
+            }
+        }, this);
+        return result;
+    };
     BookService.prototype.deleteBook = function (selectedBook, bookList) {
         var newBookList = [];
         bookList.forEach(function (book, index) {
@@ -984,7 +1056,7 @@ var BookService = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
             providedIn: 'root'
         }),
-        __metadata("design:paramtypes", [_httpService_http_service__WEBPACK_IMPORTED_MODULE_2__["HttpService"]])
+        __metadata("design:paramtypes", [_httpService_http_service__WEBPACK_IMPORTED_MODULE_2__["HttpService"], _pipes_book_title_pipe_pipe__WEBPACK_IMPORTED_MODULE_4__["BookTitlePipePipe"]])
     ], BookService);
     return BookService;
 }());

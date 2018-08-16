@@ -4,6 +4,7 @@ export class Book {
     authorsNames: string[];
     publishedDate: Date;
     bookTitle: string;
+    bookImageURL: string
 
     constructor(id: number = 0, authorsNames: string[] = [], publishedDate: Date = new Date(), bookTitle: string = '') {
         this.id = id;
@@ -11,8 +12,5 @@ export class Book {
         this.publishedDate = publishedDate;
         this.bookTitle = bookTitle;
    } 
-
-    getDateString():string {
-        return `${this.publishedDate.getDay()}/${this.publishedDate.getMonth()}/${this.publishedDate.getFullYear()}`;
-    }
+   
 }

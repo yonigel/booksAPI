@@ -188,7 +188,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"modal fade\" id=\"addBook\" tabindex=\"-1\" role=\"dialog\" aria-hidden=\"true\">\n    <div class=\"modal-dialog\" role=\"document\">\n      <div class=\"modal-content\">\n        <div class=\"modal-header\">\n          <h5 class=\"modal-title\">Add new book</h5>\n          <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n            <span aria-hidden=\"true\">&times;</span>\n          </button>\n        </div>\n        <div class=\"modal-body\">\n          <form>\n            <div class=\"form-group\">\n              <label>Book title</label>\n              <input type=\"text\" class=\"form-control\" name=\"edittedBookTitle\" id=\"bookTitleInput\" placeholder=\"Title\" (keyup)=\"bookTitleChanged($event.target.value)\">\n              <span [hidden]=\"!bookTitleInvalid\" class=\"badge badge-danger\">Book's title can't be empty</span>\n              <span [hidden]=\"!isNewBookExists\" class=\"badge badge-danger\">This book is already exists</span>\n            </div>\n            <div class=\"form-group\">\n              <label>Authors</label>\n              <input type=\"text\" class=\"form-control\" id=\"authorsInput\"  name=\"edittedBooksAuthor\" placeholder=\"Author(s)\" (keyup)=\"bookAuthorChanged($event.target.value)\">\n              <span [hidden]=\"!bookAuthorInvalid\" class=\"badge badge-danger\">Book's author can't be empty</span>\n            </div>\n            <div class=\"form-group\">\n              <label>Published date</label>\n              <input type=\"text\" class=\"form-control\" id=\"publishedDateInput\" placeholder=\"dd/mm/yyyy\" (keyup)=\"bookDateChanged($event.target.value)\">\n              <span [hidden]=\"isDateValid == true\" class=\"badge badge-danger\">Date is invalid. Please enter date in format dd/mm/yyyy</span>\n            </div>\n          </form>\n        </div>\n        <div class=\"modal-footer\">\n          <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Close</button>\n          <button type=\"button\" class=\"btn btn-primary\" (click)=\"addNewBook()\" [attr.disabled]=\"(newBookAuthor == '' || newBookTitle == '' || isDateValid == false || isNewBookExists == true || newbookDate == null) ? '' : null\">Add book</button>\n        </div>\n      </div>\n    </div>\n  </div>"
+module.exports = "<div class=\"modal fade\" id=\"addBook\" tabindex=\"-1\" role=\"dialog\" aria-hidden=\"true\">\n    <div class=\"modal-dialog\" role=\"document\">\n      <div class=\"modal-content\">\n        <div class=\"modal-header\">\n          <h5 class=\"modal-title\">Add new book</h5>\n          <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n            <span aria-hidden=\"true\">&times;</span>\n          </button>\n        </div>\n        <div class=\"modal-body\">\n          <form>\n            <div class=\"form-group\">\n              <label>Book title</label>\n              <input type=\"text\" class=\"form-control\" name=\"edittedBookTitle\" id=\"bookTitleInput\" placeholder=\"Title\" (keyup)=\"bookTitleChanged($event.target.value)\">\n              <span [hidden]=\"!bookTitleInvalid\" class=\"badge badge-danger\">Book's title can't be empty</span>\n              <span [hidden]=\"!isNewBookExists\" class=\"badge badge-danger\">This book is already exists</span>\n            </div>\n            <div class=\"form-group\">\n              <label>Authors</label>\n              <input type=\"text\" class=\"form-control\" id=\"authorsInput\"  name=\"edittedBooksAuthor\" placeholder=\"Author(s)\" (keyup)=\"bookAuthorChanged($event.target.value)\">\n              <span [hidden]=\"!bookAuthorInvalid\" class=\"badge badge-danger\">Book's author can't be empty</span>\n            </div>\n            <div class=\"form-group\">\n              <label>Published date</label>\n              <input type=\"text\" class=\"form-control\" id=\"publishedDateInput\" placeholder=\"dd/mm/yyyy\" (keyup)=\"bookDateChanged($event.target.value)\">\n              <span [hidden]=\"isDateValid == true\" class=\"badge badge-danger\">Date is invalid. Please enter date in format dd/mm/yyyy</span>\n            </div>\n          </form>\n        </div>\n        <div class=\"modal-footer\">\n          <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Close</button>\n          <button type=\"button\" class=\"btn btn-primary\" (click)=\"addNewBook()\" [attr.disabled]=\"(newBookAuthor == '' || newBookTitle == '' || isDateValid == false || isNewBookExists == true || newbookDate == null) ? '' : null\" data-dismiss=\"modal\">Add book</button>\n        </div>\n      </div>\n    </div>\n  </div>"
 
 /***/ }),
 
@@ -226,6 +226,9 @@ var AddBookComponent = /** @class */ (function () {
     }
     AddBookComponent.prototype.ngOnInit = function () {
         this.logger = new _logger_logger__WEBPACK_IMPORTED_MODULE_2__["Logger"]("AddBookComponent");
+        this.initLayout();
+    };
+    AddBookComponent.prototype.initLayout = function () {
         this.isDateValid = true;
         this.bookAuthorInvalid = false;
         this.bookTitleInvalid = false;
@@ -552,7 +555,7 @@ var EditBookComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ""
+module.exports = "div.mainBookRow {\r\n    width: 90%; \r\n    margin: 2% auto;\r\n}"
 
 /***/ }),
 
@@ -563,7 +566,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!-- <button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#addBook\">Add new book</button> -->\r\n<app-books [bookList]=\"bookList\"></app-books>\r\n<app-add-book [bookList]=\"bookList\"></app-add-book>\r\n"
+module.exports = "<!-- <button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#addBook\">Add new book</button> -->\r\n<div class=\"row mainBookRow\">\r\n    <div [hidden]=\"!newBookAdded\" style=\"display: inline; margin-top: 1%;\" class=\"alert alert-success\" role=\"alert\">\r\n        <i class=\"fa fa-check-circle-o\"></i>\r\n        The book <b>{{newBookTitle}}</b> was successfully added!\r\n        <a href=\"#\" style=\"color: #f46542\" (click)=\"newBookAdded = false\"><i class=\"fa fa-times-circle-o\"></i></a>\r\n    </div>\r\n    <div [hidden]=\"!newBookAdded\" style=\"display: inline; margin-top: 1%;\" class=\"alert alert-success\" role=\"alert\">\r\n            <i class=\"fa fa-check-circle-o\"></i>\r\n            The book <b>{{newBookTitle}}</b> was successfully added!\r\n            <a href=\"#\" style=\"color: #f46542\" (click)=\"newBookAdded = false\"><i class=\"fa fa-times-circle-o\"></i></a>\r\n        </div>\r\n</div>\r\n\r\n\r\n<app-books [bookList]=\"bookList\"></app-books>\r\n<app-add-book [bookList]=\"bookList\"></app-add-book>\r\n"
 
 /***/ }),
 
@@ -601,12 +604,15 @@ var MainBookListComponent = /** @class */ (function () {
         this.bookEventsService = bookEventsService;
         this.logger = new _logger_logger__WEBPACK_IMPORTED_MODULE_2__["Logger"]("MainBookListComponent");
         this.bookEventsService.addNewBookAction$.subscribe(function (data) {
-            _this.logger.log(data);
+            _this.newBookAdded = true;
+            _this.newBookTitle = data;
         });
     }
     MainBookListComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.logger.log("initializing");
+        this.newBookAdded = false;
+        this.newBookTitle = '';
         this.bookList = [];
         this.bookService.getBooks().subscribe(function (data) {
             for (var _i = 0, _a = data.items; _i < _a.length; _i++) {
@@ -788,7 +794,7 @@ var BookEventsService = /** @class */ (function () {
         this.addNewBookAction$ = this.addNewBookSubject.asObservable();
     }
     BookEventsService.prototype.alertNewBookAdded = function (newBooksTitle) {
-        this.addNewBookSubject.next();
+        this.addNewBookSubject.next(newBooksTitle);
     };
     BookEventsService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({

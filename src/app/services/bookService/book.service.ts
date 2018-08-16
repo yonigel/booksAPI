@@ -39,6 +39,7 @@ export class BookService implements BaseService, BookServiceInterface{
       authorsNames.push('none');
     }
     parsedBook = new Book(this.bookId, authorsNames, parsedDate, bookData.volumeInfo.title);
+    parsedBook.bookImageURL = bookData.volumeInfo.imageLinks.thumbnail
     this.bookId++;
     return parsedBook;
   }

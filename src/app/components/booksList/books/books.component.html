@@ -1,45 +1,20 @@
 <div class="row bookRow" >
   <div *ngFor="let book of bookList" class="card col-md-4 bookCard">
     <div class="card-header bg-Light ">
-      
       <div class="row bookHeader">
-          <a href="#" class="badge badge-dark bookHeader" (click)="setSelectedBook(book)" data-toggle="modal" data-target="#editBook"><i class="fa fa-edit"></i> Edit
-          </a>
-
+          <a href="#" class="badge badge-dark bookHeader" (click)="setSelectedBook(book)" data-toggle="modal" data-target="#editBook"><i class="fa fa-edit"></i> Edit</a>
           <a href="#" class="badge badge-dark bookHeader" (click)="setSelectedBook(book)" data-toggle="modal" data-target="#deleteBook"><i class="fa fa-close"></i> Delete</a>
-          
-        <!-- <div class="col-md-8">
-            {{book.bookTitle | bookTitlePipe}}
-        </div>
-        <div class="col-md-4" style="text-align: right">
-            <a href="#" class="badge badge-dark bookHeader" (click)="setSelectedBook(book)" data-toggle="modal" data-target="#editBook"><i class="fa fa-edit"></i>
-            </a>
-
-            <a href="#" class="badge badge-dark bookHeader" (click)="setSelectedBook(book)" data-toggle="modal" data-target="#deleteBook"><i class="fa fa-close"></i></a>
-            
-        </div> -->
       </div>
     </div>
     <div class="card-body">
-      
       <h6 class="card-subtitle mb-2 text-muted" style="text-align: center"><img src="{{book.bookImageURL}}" style="margin: auto auto;"></h6>
-      <h5 class="card-title">{{book.bookTitle | bookTitlePipe}}</h5>
+      <h5 class="card-title" style="text-align: center">{{book.bookTitle | bookTitlePipe}}</h5>
       <h6 class="card-subtitle mb-2 text-muted"><b>id:</b> {{book.id}}</h6>
       <h6 class="card-subtitle mb-2 text-muted"><b>Author(s):</b> {{book.authorsNames}}</h6>
-      <h6 class="card-subtitle mb-2 text-muted"><b>Publish date:</b>
-        <!-- {{book.getDateString()}} -->
-        {{book.publishedDate | date:"dd/MM/yyyy"}}
-        </h6>
-      <!-- <button type="button" (click)="setSelectedBook(book)" class="btn btn-info buttonBookCard" data-toggle="modal" data-target="#editBook">
-        Edit book
-      </button>
-      <button type="button" (click)="setSelectedBook(book)" class="btn btn-danger buttonBookCard" data-toggle="modal" data-target="#deleteBook">Remove book</button> -->
-
+      <h6 class="card-subtitle mb-2 text-muted"><b>Publish date:</b>{{book.publishedDate | date:"dd/MM/yyyy"}}</h6>
     </div>
   </div>
 </div>
-
-
 
 <app-edit-book [selectedBook]="selectedBook"></app-edit-book>
 <app-delete-book [selectedBook]="selectedBook" [bookList]="bookList"></app-delete-book>

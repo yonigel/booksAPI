@@ -95,7 +95,6 @@ export class BookService implements BaseService, BookServiceInterface{
     var newBookList: Book[] = []
     bookList.forEach(function(book, index) {
       if(book.id == selectedBook.id) {
-        this.logger.log(`deleting book ${book.bookTitle}`)
         bookList.splice(index, 1)
       }
     }, this)

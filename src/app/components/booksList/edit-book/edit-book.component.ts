@@ -40,9 +40,6 @@ export class EditBookComponent implements OnInit {
       this.selectedBook.publishedDate = this.edittedBooksDate;
     }
 
-    
-  
-    
   }
 
   private bookTitleChanged(newBookTitle) {

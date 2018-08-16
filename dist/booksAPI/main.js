@@ -300,7 +300,7 @@ module.exports = ".bookCard {\r\n    padding: 0;\r\n    margin: 1% 0;\r\n}\r\n\r
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row bookRow\" >\n  <div *ngFor=\"let book of bookList\" class=\"card col-md-4 bookCard\">\n    <div class=\"card-header bg-Light \">\n      \n      <div class=\"row bookHeader\">\n          <a href=\"#\" class=\"badge badge-dark bookHeader\" (click)=\"setSelectedBook(book)\" data-toggle=\"modal\" data-target=\"#editBook\"><i class=\"fa fa-edit\"></i> Edit\n          </a>\n\n          <a href=\"#\" class=\"badge badge-dark bookHeader\" (click)=\"setSelectedBook(book)\" data-toggle=\"modal\" data-target=\"#deleteBook\"><i class=\"fa fa-close\"></i> Delete</a>\n          \n        <!-- <div class=\"col-md-8\">\n            {{book.bookTitle | bookTitlePipe}}\n        </div>\n        <div class=\"col-md-4\" style=\"text-align: right\">\n            <a href=\"#\" class=\"badge badge-dark bookHeader\" (click)=\"setSelectedBook(book)\" data-toggle=\"modal\" data-target=\"#editBook\"><i class=\"fa fa-edit\"></i>\n            </a>\n\n            <a href=\"#\" class=\"badge badge-dark bookHeader\" (click)=\"setSelectedBook(book)\" data-toggle=\"modal\" data-target=\"#deleteBook\"><i class=\"fa fa-close\"></i></a>\n            \n        </div> -->\n      </div>\n    </div>\n    <div class=\"card-body\">\n      \n      <h6 class=\"card-subtitle mb-2 text-muted\" style=\"text-align: center\"><img src=\"{{book.bookImageURL}}\" style=\"margin: auto auto;\"></h6>\n      <h5 class=\"card-title\">{{book.bookTitle | bookTitlePipe}}</h5>\n      <h6 class=\"card-subtitle mb-2 text-muted\"><b>id:</b> {{book.id}}</h6>\n      <h6 class=\"card-subtitle mb-2 text-muted\"><b>Author(s):</b> {{book.authorsNames}}</h6>\n      <h6 class=\"card-subtitle mb-2 text-muted\"><b>Publish date:</b>\n        <!-- {{book.getDateString()}} -->\n        {{book.publishedDate | date:\"dd/MM/yyyy\"}}\n        </h6>\n      <!-- <button type=\"button\" (click)=\"setSelectedBook(book)\" class=\"btn btn-info buttonBookCard\" data-toggle=\"modal\" data-target=\"#editBook\">\n        Edit book\n      </button>\n      <button type=\"button\" (click)=\"setSelectedBook(book)\" class=\"btn btn-danger buttonBookCard\" data-toggle=\"modal\" data-target=\"#deleteBook\">Remove book</button> -->\n\n    </div>\n  </div>\n</div>\n\n\n\n<app-edit-book [selectedBook]=\"selectedBook\"></app-edit-book>\n<app-delete-book [selectedBook]=\"selectedBook\" [bookList]=\"bookList\"></app-delete-book>"
+module.exports = "<div class=\"row bookRow\" >\n  <div *ngFor=\"let book of bookList\" class=\"card col-md-4 bookCard\">\n    <div class=\"card-header bg-Light \">\n      <div class=\"row bookHeader\">\n          <a href=\"#\" class=\"badge badge-dark bookHeader\" (click)=\"setSelectedBook(book)\" data-toggle=\"modal\" data-target=\"#editBook\"><i class=\"fa fa-edit\"></i> Edit</a>\n          <a href=\"#\" class=\"badge badge-dark bookHeader\" (click)=\"setSelectedBook(book)\" data-toggle=\"modal\" data-target=\"#deleteBook\"><i class=\"fa fa-close\"></i> Delete</a>\n      </div>\n    </div>\n    <div class=\"card-body\">\n      <h6 class=\"card-subtitle mb-2 text-muted\" style=\"text-align: center\"><img src=\"{{book.bookImageURL}}\" style=\"margin: auto auto;\"></h6>\n      <h5 class=\"card-title\" style=\"text-align: center\">{{book.bookTitle | bookTitlePipe}}</h5>\n      <h6 class=\"card-subtitle mb-2 text-muted\"><b>id:</b> {{book.id}}</h6>\n      <h6 class=\"card-subtitle mb-2 text-muted\"><b>Author(s):</b> {{book.authorsNames}}</h6>\n      <h6 class=\"card-subtitle mb-2 text-muted\"><b>Publish date:</b>{{book.publishedDate | date:\"dd/MM/yyyy\"}}</h6>\n    </div>\n  </div>\n</div>\n\n<app-edit-book [selectedBook]=\"selectedBook\"></app-edit-book>\n<app-delete-book [selectedBook]=\"selectedBook\" [bookList]=\"bookList\"></app-delete-book>"
 
 /***/ }),
 
@@ -566,7 +566,7 @@ module.exports = "div.mainBookRow {\r\n    width: 90%; \r\n    margin: 2% auto;\
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!-- <button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#addBook\">Add new book</button> -->\r\n<div class=\"row mainBookRow\">\r\n    <div [hidden]=\"!newBookAdded\" style=\"display: inline; margin-top: 1%;\" class=\"alert alert-success\" role=\"alert\">\r\n        <i class=\"fa fa-check-circle-o\"></i>\r\n        The book <b>{{newBookTitle}}</b> was successfully added!\r\n        <a href=\"#\" style=\"color: #f46542\" (click)=\"newBookAdded = false\"><i class=\"fa fa-times-circle-o\"></i></a>\r\n    </div>\r\n</div>\r\n\r\n\r\n<app-books [bookList]=\"bookList\"></app-books>\r\n<app-add-book [bookList]=\"bookList\"></app-add-book>\r\n"
+module.exports = "<div class=\"row mainBookRow\">\r\n    <div [hidden]=\"!newBookAdded\" style=\"display: inline; margin-top: 1%;\" class=\"alert alert-success\" role=\"alert\">\r\n        <i class=\"fa fa-check-circle-o\"></i>\r\n        The book <b>{{newBookTitle}}</b> was successfully added!\r\n        <a href=\"#\" style=\"color: #f46542\" (click)=\"newBookAdded = false\"><i class=\"fa fa-times-circle-o\"></i></a>\r\n    </div>\r\n</div>\r\n\r\n<app-books [bookList]=\"bookList\"></app-books>\r\n<app-add-book [bookList]=\"bookList\"></app-add-book>\r\n"
 
 /***/ }),
 
@@ -657,7 +657,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"navbar navbar-light bg-light\">\n  <span class=\"navbar-text\">\n    All right reserved for yonigel\n  </span>\n</nav>"
+module.exports = "<nav class=\"navbar navbar-light bg-light\">\n  <span class=\"navbar-text\">\n    All right reserved \n  </span>\n</nav>"
 
 /***/ }),
 
@@ -720,7 +720,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"navbar navbar-expand-lg navbar-dark bg-dark\">\n    <a class=\"navbar-brand\" href=\"#\">\n      <i class=\"fa fa-home\"></i>\n      BooksAPI\n    </a>\t\n\n    <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarNav\" aria-controls=\"navbarNav\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n      <span class=\"navbar-toggler-icon\"></span>\n    </button>\n    <div class=\"collapse navbar-collapse\" id=\"navbarNav\">\n      <ul class=\"navbar-nav\">\n        <li class=\"nav-item\">\n          <a class=\"nav-link\" href=\"#\" data-toggle=\"modal\" data-target=\"#addBook\">\n            <i class=\"fa fa-plus\"></i>\n            add new book\n          </a>\n        </li>\n      </ul>\n    </div>\n  </nav>"
+module.exports = "<nav class=\"navbar navbar-expand-lg navbar-dark bg-dark\">\n    <a class=\"navbar-brand\" href=\"#\">\n      <i class=\"fa fa-home\"></i>\n      BooksAPI\n    </a>\t\n    <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarNav\" aria-controls=\"navbarNav\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n      <span class=\"navbar-toggler-icon\"></span>\n    </button>\n    <div class=\"collapse navbar-collapse\" id=\"navbarNav\">\n      <ul class=\"navbar-nav\">\n        <li class=\"nav-item\">\n          <a class=\"nav-link\" href=\"#\" data-toggle=\"modal\" data-target=\"#addBook\">\n            <i class=\"fa fa-plus\"></i>\n            add new book\n          </a>\n        </li>\n      </ul>\n    </div>\n  </nav>"
 
 /***/ }),
 
@@ -825,9 +825,6 @@ var Logger = /** @class */ (function () {
     }
     Logger.prototype.log = function (message) {
         console.log(this.TAG + ": " + message);
-    };
-    Logger.prototype.debug = function (message) {
-        console.debug(this.TAG + ": " + message);
     };
     Logger.prototype.warn = function (message) {
         console.warn(this.TAG + ": " + message);
@@ -1030,7 +1027,6 @@ var BookService = /** @class */ (function () {
         var newBookList = [];
         bookList.forEach(function (book, index) {
             if (book.id == selectedBook.id) {
-                this.logger.log("deleting book " + book.bookTitle);
                 bookList.splice(index, 1);
             }
         }, this);

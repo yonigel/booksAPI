@@ -16,7 +16,4 @@ export interface BookServiceInterface {
     isDateValid(date): boolean
 
     isBookAlreadyExists(newBooksTitle: string, bookList: Book[]): boolean
-
-
-
 }

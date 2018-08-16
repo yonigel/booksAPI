@@ -13,10 +13,6 @@ export class Logger implements LoggerInterface{
         console.log(`${this.TAG}: ${message}`);
     }
 
-    debug(message) {
-        console.debug(`${this.TAG}: ${message}`);
-    }
-
     warn(message) {
         console.warn(`${this.TAG}: ${message}`);
     }

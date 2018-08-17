@@ -6,6 +6,7 @@ import { HttpService } from '../httpService/http.service';
 import { Logger } from '../../logger/logger';
 import { Observable } from 'rxjs';
 import { BookTitlePipePipe } from '../../pipes/book-title-pipe.pipe';
+import { DateService } from '../dateService/date.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,16 +15,20 @@ export class BookService implements BaseService, BookServiceInterface{
 
   private readonly BOOKS_DATA_URL: string = '../assets/booksData.json';
   private readonly GOOGLE_API_DATE_SEPERATOR = '-';
+  private readonly USER_DATE_SEPERATOR = '/'
+  private readonly DEFAULT_AUTHORS_NAME = 'none'
+  private readonly JANUARY_MONTH = 1;
+  private readonly FIRST_DAY_IN_MONTH = 1;
+  private readonly VALID_DATE_SPLITTED_NUMBER = 3;
   private logger: Logger;
   private bookId: number;
   
-  constructor(private httpService: HttpService, private bookTitlePipe: BookTitlePipePipe) {
+  constructor(private dateService: DateService,private httpService: HttpService, private bookTitlePipe: BookTitlePipePipe) {
     this.logger = new Logger(`BookService`);
     this.bookId = 0;
    }
 
   getBooks(): Observable<any> {
-    this.logger.log(`getting books Observable`)
     return this.httpService.getHttpRequest(this.BOOKS_DATA_URL);
   }
 
@@ -36,7 +41,7 @@ export class BookService implements BaseService, BookServiceInterface{
       authorsNames = Array.from(bookData.volumeInfo.authors)
     } 
     else {
-      authorsNames.push('none');
+      authorsNames.push(this.DEFAULT_AUTHORS_NAME);
     }
     parsedBook = new Book(this.bookId, authorsNames, parsedDate, bookData.volumeInfo.title);
     parsedBook.bookImageURL = bookData.volumeInfo.imageLinks.thumbnail
@@ -44,32 +49,10 @@ export class BookService implements BaseService, BookServiceInterface{
     return parsedBook;
   }
 
-  parseBookTitle(bookTitle: string): string {
-    var parsedBookTitle: string = '';
-    var bookTitleParts = bookTitle.split(" ");
-    for(let bookTitlePart of bookTitleParts) {
-      let newTitle: string = ''
-      for(let bookTitleChar of bookTitlePart) {
-        if(!bookTitleChar.match(/^[a-zA-Z]+$/)) {
-          this.logger.log(`${bookTitleChar} not match`)
-          bookTitleChar = '';
-        } 
-        newTitle += bookTitleChar;
-        this.logger.log(`newTitle is now ${newTitle}`)
-      }
-      bookTitlePart = newTitle;
-      bookTitlePart = bookTitlePart.charAt(0).toUpperCase() + bookTitlePart.slice(1).toLowerCase();
-      parsedBookTitle += ` ${bookTitlePart}`;
-    }
-    return parsedBookTitle;
-  }
-
   isDateValid(date: Date): boolean {
     var result: boolean;
-    var splitedDate: string[] = date.toString().split("/");
-    this.logger.log(`splitedDate is ${splitedDate}`)
-    if(splitedDate.length != 3) {
-      this.logger.log(`splitted date length is ${splitedDate.length}`)
+    var splitedDate: string[] = date.toString().split(this.USER_DATE_SEPERATOR);
+    if(splitedDate.length != this.VALID_DATE_SPLITTED_NUMBER) {
       result = false;
     }
     else if(splitedDate[0].length > 2 || splitedDate[1].length > 2 || splitedDate[2].length != 4 || splitedDate[0].length < 1 || splitedDate[1].length < 1) {
@@ -98,12 +81,10 @@ export class BookService implements BaseService, BookServiceInterface{
         bookList.splice(index, 1)
       }
     }, this)
-
     return bookList
   }
 
   addBook(bookTitle: string, bookAuthor: string[], bookDate: Date, bookList: Book[]):Book[] {
-    var newBookList: Book[] = []
     var newBook: Book = new Book(this.bookId, bookAuthor, bookDate, bookTitle)
     bookList.push(newBook)
     return bookList;
@@ -111,16 +92,28 @@ export class BookService implements BaseService, BookServiceInterface{
 
   private parseDate(date: string, seperator: string): Date {
     var parsedDate = new Date();
+    var month: number;
+    var day: number
     var dateModules = date.split(seperator);
     if(dateModules.length == 1) {
-      parsedDate.setFullYear(parseInt(dateModules[0]), 1, 1)
+      month = this.JANUARY_MONTH
+      day = this.FIRST_DAY_IN_MONTH
     }
     else if(dateModules.length == 2) {
-      parsedDate.setFullYear(parseInt(dateModules[0]), parseInt(dateModules[1])+1, 1)
+      month = this.dateService.fixMonth(parseInt(dateModules[1]))
+      day = this.FIRST_DAY_IN_MONTH
     }
     else if(dateModules.length == 2) {
-      parsedDate.setFullYear(parseInt(dateModules[0]), parseInt(dateModules[1])+1, parseInt(dateModules[2]))
+      month = this.dateService.fixMonth(parseInt(dateModules[1]))
+      day = parseInt(dateModules[2])
     }
+    else if(dateModules.length == 3) {
+      month = this.dateService.fixMonth(parseInt(dateModules[1]))
+      day = parseInt(dateModules[2])
+    }
+    parsedDate.setFullYear(parseInt(dateModules[0]), month, day)
     return parsedDate;
   }
+
+
 }

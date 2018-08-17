@@ -934,6 +934,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _httpService_http_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../httpService/http.service */ "./src/app/services/httpService/http.service.ts");
 /* harmony import */ var _logger_logger__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../logger/logger */ "./src/app/logger/logger.ts");
 /* harmony import */ var _pipes_book_title_pipe_pipe__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../pipes/book-title-pipe.pipe */ "./src/app/pipes/book-title-pipe.pipe.ts");
+/* harmony import */ var _dateService_date_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../dateService/date.service */ "./src/app/services/dateService/date.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -948,17 +949,23 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var BookService = /** @class */ (function () {
-    function BookService(httpService, bookTitlePipe) {
+    function BookService(dateService, httpService, bookTitlePipe) {
+        this.dateService = dateService;
         this.httpService = httpService;
         this.bookTitlePipe = bookTitlePipe;
         this.BOOKS_DATA_URL = '../assets/booksData.json';
         this.GOOGLE_API_DATE_SEPERATOR = '-';
+        this.USER_DATE_SEPERATOR = '/';
+        this.DEFAULT_AUTHORS_NAME = 'none';
+        this.JANUARY_MONTH = 1;
+        this.FIRST_DAY_IN_MONTH = 1;
+        this.VALID_DATE_SPLITTED_NUMBER = 3;
         this.logger = new _logger_logger__WEBPACK_IMPORTED_MODULE_3__["Logger"]("BookService");
         this.bookId = 0;
     }
     BookService.prototype.getBooks = function () {
-        this.logger.log("getting books Observable");
         return this.httpService.getHttpRequest(this.BOOKS_DATA_URL);
     };
     BookService.prototype.parseBook = function (bookData) {
@@ -970,40 +977,17 @@ var BookService = /** @class */ (function () {
             authorsNames = Array.from(bookData.volumeInfo.authors);
         }
         else {
-            authorsNames.push('none');
+            authorsNames.push(this.DEFAULT_AUTHORS_NAME);
         }
         parsedBook = new _models_book__WEBPACK_IMPORTED_MODULE_1__["Book"](this.bookId, authorsNames, parsedDate, bookData.volumeInfo.title);
         parsedBook.bookImageURL = bookData.volumeInfo.imageLinks.thumbnail;
         this.bookId++;
         return parsedBook;
     };
-    BookService.prototype.parseBookTitle = function (bookTitle) {
-        var parsedBookTitle = '';
-        var bookTitleParts = bookTitle.split(" ");
-        for (var _i = 0, bookTitleParts_1 = bookTitleParts; _i < bookTitleParts_1.length; _i++) {
-            var bookTitlePart = bookTitleParts_1[_i];
-            var newTitle = '';
-            for (var _a = 0, bookTitlePart_1 = bookTitlePart; _a < bookTitlePart_1.length; _a++) {
-                var bookTitleChar = bookTitlePart_1[_a];
-                if (!bookTitleChar.match(/^[a-zA-Z]+$/)) {
-                    this.logger.log(bookTitleChar + " not match");
-                    bookTitleChar = '';
-                }
-                newTitle += bookTitleChar;
-                this.logger.log("newTitle is now " + newTitle);
-            }
-            bookTitlePart = newTitle;
-            bookTitlePart = bookTitlePart.charAt(0).toUpperCase() + bookTitlePart.slice(1).toLowerCase();
-            parsedBookTitle += " " + bookTitlePart;
-        }
-        return parsedBookTitle;
-    };
     BookService.prototype.isDateValid = function (date) {
         var result;
-        var splitedDate = date.toString().split("/");
-        this.logger.log("splitedDate is " + splitedDate);
-        if (splitedDate.length != 3) {
-            this.logger.log("splitted date length is " + splitedDate.length);
+        var splitedDate = date.toString().split(this.USER_DATE_SEPERATOR);
+        if (splitedDate.length != this.VALID_DATE_SPLITTED_NUMBER) {
             result = false;
         }
         else if (splitedDate[0].length > 2 || splitedDate[1].length > 2 || splitedDate[2].length != 4 || splitedDate[0].length < 1 || splitedDate[1].length < 1) {
@@ -1033,32 +1017,81 @@ var BookService = /** @class */ (function () {
         return bookList;
     };
     BookService.prototype.addBook = function (bookTitle, bookAuthor, bookDate, bookList) {
-        var newBookList = [];
         var newBook = new _models_book__WEBPACK_IMPORTED_MODULE_1__["Book"](this.bookId, bookAuthor, bookDate, bookTitle);
         bookList.push(newBook);
         return bookList;
     };
     BookService.prototype.parseDate = function (date, seperator) {
         var parsedDate = new Date();
+        var month;
+        var day;
         var dateModules = date.split(seperator);
         if (dateModules.length == 1) {
-            parsedDate.setFullYear(parseInt(dateModules[0]), 1, 1);
+            month = this.JANUARY_MONTH;
+            day = this.FIRST_DAY_IN_MONTH;
         }
         else if (dateModules.length == 2) {
-            parsedDate.setFullYear(parseInt(dateModules[0]), parseInt(dateModules[1]) + 1, 1);
+            month = this.dateService.fixMonth(parseInt(dateModules[1]));
+            day = this.FIRST_DAY_IN_MONTH;
         }
         else if (dateModules.length == 2) {
-            parsedDate.setFullYear(parseInt(dateModules[0]), parseInt(dateModules[1]) + 1, parseInt(dateModules[2]));
+            month = this.dateService.fixMonth(parseInt(dateModules[1]));
+            day = parseInt(dateModules[2]);
         }
+        else if (dateModules.length == 3) {
+            month = this.dateService.fixMonth(parseInt(dateModules[1]));
+            day = parseInt(dateModules[2]);
+        }
+        parsedDate.setFullYear(parseInt(dateModules[0]), month, day);
         return parsedDate;
     };
     BookService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
             providedIn: 'root'
         }),
-        __metadata("design:paramtypes", [_httpService_http_service__WEBPACK_IMPORTED_MODULE_2__["HttpService"], _pipes_book_title_pipe_pipe__WEBPACK_IMPORTED_MODULE_4__["BookTitlePipePipe"]])
+        __metadata("design:paramtypes", [_dateService_date_service__WEBPACK_IMPORTED_MODULE_5__["DateService"], _httpService_http_service__WEBPACK_IMPORTED_MODULE_2__["HttpService"], _pipes_book_title_pipe_pipe__WEBPACK_IMPORTED_MODULE_4__["BookTitlePipePipe"]])
     ], BookService);
     return BookService;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/services/dateService/date.service.ts":
+/*!******************************************************!*\
+  !*** ./src/app/services/dateService/date.service.ts ***!
+  \******************************************************/
+/*! exports provided: DateService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DateService", function() { return DateService; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var DateService = /** @class */ (function () {
+    function DateService() {
+    }
+    DateService.prototype.fixMonth = function (month) {
+        return month++;
+    };
+    DateService = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
+            providedIn: 'root'
+        }),
+        __metadata("design:paramtypes", [])
+    ], DateService);
+    return DateService;
 }());
 
 

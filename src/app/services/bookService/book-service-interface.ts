@@ -11,8 +11,6 @@ export interface BookServiceInterface {
 
     parseBook(book): Book
 
-    parseBookTitle(bookTitle: string): string
-
     isDateValid(date): boolean
 
     isBookAlreadyExists(newBooksTitle: string, bookList: Book[]): boolean

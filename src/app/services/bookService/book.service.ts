@@ -33,25 +33,25 @@ export class BookService implements BaseService, BookServiceInterface{
   }
 
   parseBook(bookData): Book {
-    var parsedBook: Book;
-    var authorsNames: string[] = []
-    var parsedBookTitle: string;
-    var parsedDate: Date = this.parseDate(bookData.volumeInfo.publishedDate, this.GOOGLE_API_DATE_SEPERATOR);
+    let parsedBook: Book;
+    let authorsNames: string[] = []
+    let parsedBookTitle: string;
+    let parsedDate: Date = this.parseDate(bookData.volumeInfo.publishedDate, this.GOOGLE_API_DATE_SEPERATOR);
     if(bookData.volumeInfo.authors != undefined) {
-      authorsNames = Array.from(bookData.volumeInfo.authors)
+      authorsNames = Array.from(bookData.volumeInfo.authors);
     } 
     else {
       authorsNames.push(this.DEFAULT_AUTHORS_NAME);
     }
     parsedBook = new Book(this.bookId, authorsNames, parsedDate, bookData.volumeInfo.title);
-    parsedBook.bookImageURL = bookData.volumeInfo.imageLinks.thumbnail
+    parsedBook.bookImageURL = bookData.volumeInfo.imageLinks.thumbnail;
     this.bookId++;
     return parsedBook;
   }
 
   isDateValid(date: Date): boolean {
-    var result: boolean;
-    var splitedDate: string[] = date.toString().split(this.USER_DATE_SEPERATOR);
+    let result: boolean;
+    let splitedDate: string[] = date.toString().split(this.USER_DATE_SEPERATOR);
     if(splitedDate.length != this.VALID_DATE_SPLITTED_NUMBER) {
       result = false;
     }
@@ -65,36 +65,27 @@ export class BookService implements BaseService, BookServiceInterface{
   }
 
   isBookAlreadyExists(newBooksTitle: string, bookList: Book[]): boolean {
-    var result: boolean = false    
-    bookList.forEach(function(book) {
-      if(this.bookTitlePipe.transform(newBooksTitle) == this.bookTitlePipe.transform(book.bookTitle)) {
-        result = true;
-      }
-    }, this)
-    return result;
+    
+    bookList = bookList.filter(book => this.bookTitlePipe.transform(newBooksTitle) == this.bookTitlePipe.transform(book.bookTitle))
+    return bookList.length > 0 ? true : false;
+
   }
 
   deleteBook(selectedBook: Book, bookList: Book[]): Book[] {
-    var newBookList: Book[] = []
-    bookList.forEach(function(book, index) {
-      if(book.id == selectedBook.id) {
-        bookList.splice(index, 1)
-      }
-    }, this)
-    return bookList
+    return bookList.filter(book => book.id != selectedBook.id)
   }
 
   addBook(bookTitle: string, bookAuthor: string[], bookDate: Date, bookList: Book[]):Book[] {
-    var newBook: Book = new Book(this.bookId, bookAuthor, bookDate, bookTitle)
+    let newBook: Book = new Book(this.bookId, bookAuthor, bookDate, bookTitle)
     bookList.push(newBook)
     return bookList;
   }
 
   private parseDate(date: string, seperator: string): Date {
-    var parsedDate = new Date();
-    var month: number;
-    var day: number
-    var dateModules = date.split(seperator);
+    let parsedDate = new Date();
+    let month: number;
+    let day: number
+    let dateModules = date.split(seperator);
     if(dateModules.length == 1) {
       month = this.JANUARY_MONTH
       day = this.FIRST_DAY_IN_MONTH
@@ -114,6 +105,5 @@ export class BookService implements BaseService, BookServiceInterface{
     parsedDate.setFullYear(parseInt(dateModules[0]), month, day)
     return parsedDate;
   }
-
 
 }

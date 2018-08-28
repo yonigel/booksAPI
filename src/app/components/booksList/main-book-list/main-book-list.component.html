@@ -6,5 +6,6 @@
     </div>
 </div>
 
-<app-books [bookList]="bookList"></app-books>
+<app-books (selectedBookEvent)="selectedBookChenged($event)" [bookList]="bookList"></app-books>
 <app-add-book [bookList]="bookList"></app-add-book>
+<app-delete-book (updatedBookList)="bookListUpdated($event)" [selectedBook]="selectedBook" [bookList]="bookList"></app-delete-book>

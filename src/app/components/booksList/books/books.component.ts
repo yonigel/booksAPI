@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Book } from '../../../models/book';
 import { Logger } from '../../../logger/logger';
 
@@ -12,6 +12,9 @@ export class BooksComponent implements OnInit {
   @Input()
   bookList: Book[];
 
+  @Output()
+  selectedBookEvent = new EventEmitter<Book>();
+
   private logger: Logger;
   private selectedBook: Book
   constructor() { }
@@ -22,5 +25,10 @@ export class BooksComponent implements OnInit {
 
   private setSelectedBook(book: Book) {
     this.selectedBook = book;
+    this.selectedBookEvent.emit(book)
+  }
+
+  updateBookList(books: Book[]) {
+    this.logger.log(`emitted`)
   }
 }

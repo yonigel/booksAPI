@@ -289,7 +289,7 @@ var AddBookComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".bookCard {\r\n    padding: 0;\r\n    margin: 1% 0;\r\n}\r\n\r\n.bookRow {\r\n    width: 90%;\r\n    margin: 2% auto;\r\n}\r\n\r\n.buttonBookCard {\r\n    margin: 0 1%;  \r\n}\r\n\r\na.bookHeader {\r\n    margin-right: 0;\r\n    margin-left: 1%;\r\n    text-align: right;\r\n}\r\n\r\ndiv.bookHeader {\r\n    /* min-height: 3.5em; */\r\n}\r\n\r\ndiv.bookBody {\r\n    min-height: 10em;\r\n}"
+module.exports = ".bookCard {\r\n    padding: 0;\r\n    margin: 1% 0;\r\n}\r\n\r\n.bookRow {\r\n    width: 90%;\r\n    margin: 2% auto;\r\n}\r\n\r\n.buttonBookCard {\r\n    margin: 0 1%;  \r\n}\r\n\r\na.bookHeader {\r\n    margin-right: 0;\r\n    margin-left: 1%;\r\n    text-align: right;\r\n    \r\n}\r\n\r\ndiv.bookHeader {\r\n    /* min-height: 3.5em; */\r\n}\r\n\r\ndiv.bookBody {\r\n    min-height: 10em;\r\n}"
 
 /***/ }),
 
@@ -300,7 +300,7 @@ module.exports = ".bookCard {\r\n    padding: 0;\r\n    margin: 1% 0;\r\n}\r\n\r
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row bookRow\" >\n  <div *ngFor=\"let book of bookList\" class=\"card col-md-4 bookCard  bg-light\">\n    <div class=\"card-header \">\n      <div class=\"row bookHeader\">\n        <b style=\"margin: auto auto\">{{book.bookTitle | bookTitlePipe}}</b>\n      </div>\n    </div>\n    <div class=\"card-body \">\n      <h6 class=\"card-subtitle mb-2 text-muted\" style=\"text-align: center\"><img src=\"{{book.bookImageURL}}\" style=\"margin: auto auto;\"></h6>\n      <h6 class=\"card-subtitle mb-2 text-muted\"><b>id:</b> {{book.id}}</h6>\n      <h6 class=\"card-subtitle mb-2 text-muted\"><b>Author(s):</b> {{book.authorsNames}}</h6>\n      <h6 class=\"card-subtitle mb-2 text-muted\"><b>Publish date:</b>{{book.publishedDate | date:\"dd/MM/yyyy\"}}</h6>\n    </div>\n    <div class=\"card-footer\">\n      \n        <a href=\"#\" class=\"badge badge-dark bookHeader\" (click)=\"setSelectedBook(book)\" data-toggle=\"modal\" data-target=\"#editBook\"><i class=\"fa fa-edit\"></i> Edit</a>\n        <a href=\"#\" class=\"badge badge-dark bookHeader\" (click)=\"setSelectedBook(book)\" data-toggle=\"modal\" data-target=\"#deleteBook\"><i class=\"fa fa-close\"></i> Delete</a>\n    </div>\n  </div>\n</div>\n\n<app-edit-book [selectedBook]=\"selectedBook\"></app-edit-book>\n<app-delete-book [selectedBook]=\"selectedBook\" [bookList]=\"bookList\"></app-delete-book>"
+module.exports = "<div class=\"row bookRow\" >\n  <div *ngFor=\"let book of bookList\" class=\"card col-md-4 bookCard  bg-light\" >\n    <div class=\"card-header \">\n      <div class=\"row bookHeader\">\n        <div class=\"col-md-9\" style=\"text-align: left; min-height: 4em;\">\n          <b style=\"margin: auto auto; \" >{{book.bookTitle | bookTitlePipe}}</b>\n        </div>\n        <div class=\"col-md-3\" style=\"text-align:right\">\n        <a href=\"#\" class=\"badge badge-dark bookHeader\" (click)=\"setSelectedBook(book)\" data-toggle=\"modal\" data-target=\"#editBook\"><i class=\"fa fa-edit\"></i></a>\n        <a href=\"#\" class=\"badge badge-dark bookHeader\" (click)=\"setSelectedBook(book)\" data-toggle=\"modal\" data-target=\"#deleteBook\"><i class=\"fa fa-close\"></i></a>\n        </div>\n      </div>\n    </div>\n    <div class=\"card-body\" style=\"position: relative\">\n      <h6 class=\"card-subtitle mb-2 text-muted\" style=\"text-align: center;\"><img src=\"{{book.bookImageURL}}\"></h6>\n      <div style=\"position: absolute\">\n        <h6 class=\"card-subtitle mb-2 text-muted\"><b>id:</b> {{book.id}}</h6>\n        <h6 class=\"card-subtitle mb-2 text-muted\"><b>Author(s):</b> {{book.authorsNames}}</h6>\n        <h6 class=\"card-subtitle mb-2 text-muted\"><b>Publish date:</b>{{book.publishedDate | date:\"dd/MM/yyyy\"}}</h6>\n      </div>\n    </div>\n    <!-- <div class=\"card-footer\"> -->\n<!--       \n        <a href=\"#\" class=\"badge badge-dark bookHeader\" (click)=\"setSelectedBook(book)\" data-toggle=\"modal\" data-target=\"#editBook\"><i class=\"fa fa-edit\"></i> Edit</a>\n        <a href=\"#\" class=\"badge badge-dark bookHeader\" (click)=\"setSelectedBook(book)\" data-toggle=\"modal\" data-target=\"#deleteBook\"><i class=\"fa fa-close\"></i> Delete</a> -->\n    <!-- </div> -->\n  </div>\n</div>\n\n<app-edit-book [selectedBook]=\"selectedBook\"></app-edit-book>\n<app-delete-book [selectedBook]=\"selectedBook\" [bookList]=\"bookList\"></app-delete-book>"
 
 /***/ }),
 
@@ -1008,13 +1008,13 @@ var BookService = /** @class */ (function () {
         return result;
     };
     BookService.prototype.deleteBook = function (selectedBook, bookList) {
-        var newBookList = [];
-        bookList.forEach(function (book, index) {
-            if (book.id == selectedBook.id) {
-                bookList.splice(index, 1);
-            }
-        }, this);
-        return bookList;
+        // bookList.forEach(function(book, index) {
+        //   if(book.id == selectedBook.id) {
+        //     bookList.splice(index, 1)
+        //   }
+        // }, this)
+        return bookList.filter(function (book) { return book.id != selectedBook.id; });
+        // return bookList
     };
     BookService.prototype.addBook = function (bookTitle, bookAuthor, bookDate, bookList) {
         var newBook = new _models_book__WEBPACK_IMPORTED_MODULE_1__["Book"](this.bookId, bookAuthor, bookDate, bookTitle);

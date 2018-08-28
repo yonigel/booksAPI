@@ -1,23 +1,32 @@
 <div class="row bookRow" >
-  <div *ngFor="let book of bookList" class="card col-md-4 bookCard  bg-light">
+  <div *ngFor="let book of bookList" class="card col-md-4 bookCard  bg-light" >
     <div class="card-header ">
       <div class="row bookHeader">
-        <b style="margin: auto auto">{{book.bookTitle | bookTitlePipe}}</b>
+        <div class="col-md-9" style="text-align: left; min-height: 4em;">
+          <b style="margin: auto auto; " >{{book.bookTitle | bookTitlePipe}}</b>
+        </div>
+        <div class="col-md-3" style="text-align:right">
+        <a href="#" class="badge badge-dark bookHeader" (click)="setSelectedBook(book)" data-toggle="modal" data-target="#editBook"><i class="fa fa-edit"></i></a>
+        <a href="#" class="badge badge-dark bookHeader" (click)="setSelectedBook(book)" data-toggle="modal" data-target="#deleteBook"><i class="fa fa-close"></i></a>
+        </div>
       </div>
     </div>
-    <div class="card-body ">
-      <h6 class="card-subtitle mb-2 text-muted" style="text-align: center"><img src="{{book.bookImageURL}}" style="margin: auto auto;"></h6>
-      <h6 class="card-subtitle mb-2 text-muted"><b>id:</b> {{book.id}}</h6>
-      <h6 class="card-subtitle mb-2 text-muted"><b>Author(s):</b> {{book.authorsNames}}</h6>
-      <h6 class="card-subtitle mb-2 text-muted"><b>Publish date:</b>{{book.publishedDate | date:"dd/MM/yyyy"}}</h6>
+    <div class="card-body" style="position: relative">
+      <h6 class="card-subtitle mb-2 text-muted" style="text-align: center;"><img src="{{book.bookImageURL}}"></h6>
+      <div style="position: absolute">
+        <h6 class="card-subtitle mb-2 text-muted"><b>id:</b> {{book.id}}</h6>
+        <h6 class="card-subtitle mb-2 text-muted"><b>Author(s):</b> {{book.authorsNames}}</h6>
+        <h6 class="card-subtitle mb-2 text-muted"><b>Publish date:</b>{{book.publishedDate | date:"dd/MM/yyyy"}}</h6>
+      </div>
     </div>
-    <div class="card-footer">
-      
+    <!-- <div class="card-footer"> -->
+<!--       
         <a href="#" class="badge badge-dark bookHeader" (click)="setSelectedBook(book)" data-toggle="modal" data-target="#editBook"><i class="fa fa-edit"></i> Edit</a>
-        <a href="#" class="badge badge-dark bookHeader" (click)="setSelectedBook(book)" data-toggle="modal" data-target="#deleteBook"><i class="fa fa-close"></i> Delete</a>
-    </div>
+        <a href="#" class="badge badge-dark bookHeader" (click)="setSelectedBook(book)" data-toggle="modal" data-target="#deleteBook"><i class="fa fa-close"></i> Delete</a> -->
+    <!-- </div> -->
   </div>
 </div>
 
 <app-edit-book [selectedBook]="selectedBook"></app-edit-book>
-<app-delete-book [selectedBook]="selectedBook" [bookList]="bookList"></app-delete-book>
+
+<!-- <app-delete-book (updatedBookList)="updateBookList($event)" [selectedBook]="selectedBook" [bookList]="bookList"></app-delete-book> -->

@@ -6,8 +6,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class BookTitlePipePipe implements PipeTransform {
 
   transform(value: string, args?: any): any {
-    var parsedBookTitle: string = '';
-    var bookTitleParts = value.split(" ");
+    let parsedBookTitle: string = '';
+    let bookTitleParts = value.split(" ");
     for(let bookTitlePart of bookTitleParts) {
       let newTitle: string = ''
       for(let bookTitleChar of bookTitlePart) {

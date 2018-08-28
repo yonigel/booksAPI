@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Book } from '../../../models/book';
 import { BookService } from '../../../services/bookService/book.service';
 
@@ -9,11 +9,15 @@ import { BookService } from '../../../services/bookService/book.service';
 })
 export class DeleteBookComponent implements OnInit {
 
+  
   @Input()
-  selectedBook: Book
+  selectedBook: Book;
 
   @Input()
-  bookList: Book[]
+  bookList: Book[];
+
+  @Output() updatedBookList = new EventEmitter<Book[]>();
+
 
   constructor(private bookService: BookService) { }
 
@@ -23,6 +27,8 @@ export class DeleteBookComponent implements OnInit {
 
   private deleteBook(book: Book) {
     this.bookList = this.bookService.deleteBook(book, this.bookList)
+    // this.bookList = []
+    this.updatedBookList.emit(this.bookList)
   }
 
 }

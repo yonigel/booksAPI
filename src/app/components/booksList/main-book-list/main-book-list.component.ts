@@ -15,6 +15,7 @@ export class MainBookListComponent implements OnInit {
   private logger: Logger;
   private newBookAdded: boolean
   private newBookTitle: string
+  private selectedBook: Book;
 
   constructor(private bookService: BookService, private bookEventsService: BookEventsService) {
     this.logger = new Logger(`MainBookListComponent`);
@@ -39,6 +40,15 @@ export class MainBookListComponent implements OnInit {
       this.logger.error(`error occurred when getting books`)
     }
   )
+  }
+
+  private selectedBookChenged(book: Book) {
+    this.selectedBook = book;
+  }
+
+  private bookListUpdated(bookList: Book[]) {
+    this.logger.log(`book list emitted`)
+    this.bookList = bookList;
   }
 
 }
